@@ -1,511 +1,447 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🇺🇿 Узбекистан 1–5 мая</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{
-      --gold:#f5c842;--orange:#f07e26;--red:#d94f3d;
-      --teal:#2ab5a0;--blue:#2d7dd2;--purple:#9b59b6;
-      --green:#27ae60;--card:rgba(255,255,255,0.06);
-    }
-    body{font-family:'Segoe UI',system-ui,sans-serif;background:#110e05;color:#f0e6cc;overflow-x:hidden}
-
-    /* TOP */
-    .top-border{height:4px;background:linear-gradient(90deg,var(--red),var(--orange),var(--gold),var(--teal),var(--blue),var(--purple))}
-
-    /* HERO */
-    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;
-      background:linear-gradient(180deg,rgba(17,14,5,0) 60%,#110e05 100%),linear-gradient(135deg,#3d1c00 0%,#7b3a00 30%,#1a3a4a 70%,#0a2030 100%);
-      position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;
-      background:radial-gradient(circle,rgba(245,200,66,.18) 0%,transparent 65%);top:-200px;right:-200px}
-    .hero::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;
-      background:radial-gradient(circle,rgba(42,181,160,.18) 0%,transparent 65%);bottom:-100px;left:-100px}
-    .hero-pat{position:absolute;inset:0;
-      background-image:repeating-linear-gradient(45deg,rgba(245,200,66,.04) 0,rgba(245,200,66,.04) 1px,transparent 0,transparent 50%);
-      background-size:30px 30px;pointer-events:none}
-    .flag{font-size:4rem;margin-bottom:1rem;position:relative;z-index:1}
-    .hero h1{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:900;letter-spacing:-1px;
-      background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      position:relative;z-index:1;margin-bottom:.6rem}
-    .hero-sub{font-size:1.2rem;color:rgba(240,230,204,.7);position:relative;z-index:1;margin-bottom:.4rem}
-    .dates-badge{display:inline-block;background:linear-gradient(90deg,var(--orange),var(--red));color:#fff;
-      font-weight:700;padding:.45rem 1.4rem;border-radius:50px;font-size:1rem;
-      position:relative;z-index:1;margin-top:1.2rem;box-shadow:0 4px 20px rgba(240,126,38,.4)}
-    .ornament{display:flex;align-items:center;gap:.8rem;justify-content:center;margin:2rem auto 0;position:relative;z-index:1}
-    .ornament span{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold))}
-    .ornament span:last-child{transform:scaleX(-1)}
-
-    /* ROUTE */
-    .route-bar{display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;
-      padding:2rem 1.5rem 0;max-width:860px;margin:0 auto}
-    .rc{font-weight:700;font-size:.95rem;color:var(--gold)}
-    .ra{color:rgba(245,200,66,.4);font-size:1.1rem}
-
-    /* NAV */
-    .nav-pills{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;padding:1.5rem 1.5rem 0;max-width:860px;margin:0 auto}
-    .nav-pill{padding:.4rem 1rem;border-radius:50px;font-size:.82rem;font-weight:600;text-decoration:none;
-      border:1px solid rgba(245,200,66,.25);color:var(--gold);transition:background .2s}
-    .nav-pill:hover{background:rgba(245,200,66,.12)}
-
-    /* CONTAINER */
-    .wrap{max-width:860px;margin:0 auto;padding:0 1.5rem}
-
-    /* SECTION LABEL */
-    .sec{text-align:center;padding:3rem 0 0}
-    .sec h2{font-size:1.9rem;font-weight:800;
-      background:linear-gradient(90deg,var(--gold),var(--orange));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .sec p{color:rgba(240,230,204,.5);font-size:.95rem;margin-top:.3rem}
-
-    /* TICKETS */
-    .tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.2rem;margin-top:1.5rem}
-    .tkt{border-radius:16px;overflow:hidden}
-    .tkt-train{background:linear-gradient(135deg,#0d2a5e,#1a4a9e);border:1px solid rgba(255,255,255,.15)}
-    .tkt-cx{background:linear-gradient(135deg,#1a3a1a,#2a6a2a);border:1px solid rgba(255,255,255,.15)}
-    .tkt-hy{background:linear-gradient(135deg,#1c1060,#3b2abf);border:1px solid rgba(255,255,255,.15)}
-    .tkt-head{padding:.8rem 1.1rem;display:flex;justify-content:space-between;align-items:center;
-      border-bottom:1px dashed rgba(255,255,255,.2)}
-    .tkt-type{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.8}
-    .tkt-num{font-size:.7rem;opacity:.6}
-    .tkt-body{padding:1rem 1.1rem}
-    .tkt-route{display:flex;align-items:center;gap:.7rem;margin-bottom:.9rem}
-    .tkt-city{flex:1}
-    .tkt-time{font-size:1.5rem;font-weight:900;color:var(--gold);line-height:1.1}
-    .tkt-name{font-size:1rem;font-weight:800;color:#fff;line-height:1.1}
-    .tkt-date{font-size:.72rem;opacity:.6;margin-top:.1rem}
-    .tkt-mid{text-align:center;flex-shrink:0}
-    .tkt-dur{font-size:.7rem;opacity:.6;margin-bottom:.1rem}
-    .tkt-arr{font-size:1.2rem;color:rgba(255,255,255,.4)}
-    .tkt-notch{display:flex;align-items:center;margin:.2rem 0}
-    .tkt-n{width:14px;height:14px;border-radius:50%;background:#110e05;flex-shrink:0}
-    .tkt-nl{flex:1;border-top:1px dashed rgba(255,255,255,.2)}
-    .tkt-meta{display:flex;gap:1.2rem;flex-wrap:wrap;font-size:.78rem;margin-top:.8rem}
-    .tkt-ml{opacity:.5;display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.5px}
-    .tkt-mv{color:#fff;font-weight:600}
-    .tkt-foot{padding:.6rem 1.1rem;background:rgba(0,0,0,.2);font-size:.75rem;opacity:.7;
-      display:flex;justify-content:space-between;border-top:1px dashed rgba(255,255,255,.1)}
-
-    /* PHOTOS */
-    .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1.5rem}
-    .ph{border-radius:16px;overflow:hidden;position:relative;aspect-ratio:4/3;cursor:pointer;background:var(--card)}
-    .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
-    .ph:hover img{transform:scale(1.06)}
-    .ph-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 50%);
-      display:flex;align-items:flex-end;padding:.9rem;opacity:0;transition:opacity .3s}
-    .ph:hover .ph-ov{opacity:1}
-    .ph-lbl{font-size:.85rem;font-weight:700;color:#fff}
-    .ph-city{font-size:.7rem;color:var(--gold);margin-top:.1rem}
-    .ph-fb{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;
-      justify-content:center;gap:.4rem;font-size:2.2rem}
-    .ph-fb span{font-size:.75rem;color:rgba(240,230,204,.5)}
-
-    /* ACCORDION */
-    .accordion{margin-top:2rem;padding-bottom:3rem}
-    .ai{border:1px solid rgba(245,200,66,.15);border-radius:18px;margin-bottom:1rem;
-      overflow:hidden;transition:border-color .3s}
-    .ai.open{border-color:rgba(245,200,66,.4)}
-    .ah{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.4rem;
-      cursor:pointer;user-select:none;gap:1rem;background:rgba(255,255,255,.04);transition:background .2s}
-    .ah:hover{background:rgba(245,200,66,.06)}
-    .ah-l{display:flex;align-items:center;gap:.9rem}
-    .ai-ico{font-size:1.5rem;flex-shrink:0}
-    .ai-title{font-size:1.05rem;font-weight:700;color:#f0e6cc}
-    .ai-sub{font-size:.78rem;color:rgba(240,230,204,.45);margin-top:.15rem}
-    .ai-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .8rem;
-      border-radius:50px;font-size:.75rem;font-weight:600;flex-shrink:0}
-    .ai-arr{font-size:.85rem;color:var(--gold);transition:transform .35s ease;flex-shrink:0}
-    .ai.open .ai-arr{transform:rotate(180deg)}
-    .ab{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1)}
-    .ab-in{padding:0 1rem 1rem}
-
-    /* TIMELINE */
-    .tl{position:relative;padding:1rem 0 .5rem}
-    .tl::before{content:'';position:absolute;left:22px;top:0;bottom:0;width:2px;
-      background:linear-gradient(180deg,var(--gold),var(--teal),var(--blue),var(--purple));border-radius:2px}
-    .ti{display:flex;gap:1.2rem;margin-bottom:1rem;position:relative}
-    .ti-dot{flex-shrink:0;width:46px;display:flex;align-items:flex-start;justify-content:center;padding-top:.55rem}
-    .dot{width:16px;height:16px;border-radius:50%;border:3px solid var(--gold);background:#110e05;position:relative;z-index:1;flex-shrink:0}
-    .dot.t{border-color:var(--teal)}.dot.b{border-color:var(--blue)}.dot.r{border-color:var(--red)}
-    .dot.p{border-color:var(--purple)}.dot.g{border-color:var(--green)}
-    .tc{flex:1;background:var(--card);border:1px solid rgba(245,200,66,.12);border-radius:14px;
-      padding:.9rem 1.2rem;transition:border-color .2s}
-    .tc:hover{border-color:rgba(245,200,66,.35)}
-    .tc.opt{border-style:dashed;opacity:.8}
-    .tt{font-size:.8rem;font-weight:700;color:var(--gold);letter-spacing:.5px;margin-bottom:.2rem}
-    .tn{font-size:1rem;font-weight:600;color:#f0e6cc;margin-bottom:.3rem}
-    .td{font-size:.88rem;color:rgba(240,230,204,.6);line-height:1.5}
-    .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
-    .tag{display:inline-block;padding:.2rem .7rem;border-radius:50px;font-size:.78rem;font-weight:600;
-      background:rgba(245,200,66,.12);color:var(--gold);border:1px solid rgba(245,200,66,.2)}
-    .tag.t{background:rgba(42,181,160,.12);color:var(--teal);border-color:rgba(42,181,160,.2)}
-    .tag.b{background:rgba(45,125,210,.12);color:var(--blue);border-color:rgba(45,125,210,.2)}
-    .tag.r{background:rgba(217,79,61,.12);color:var(--red);border-color:rgba(217,79,61,.2)}
-    .tag.p{background:rgba(155,89,182,.12);color:var(--purple);border-color:rgba(155,89,182,.2)}
-    .tag.g{background:rgba(39,174,96,.12);color:var(--green);border-color:rgba(39,174,96,.2)}
-    .ml{display:inline-flex;align-items:center;gap:.3rem;font-size:.82rem;color:var(--teal);
-      text-decoration:none;margin-top:.5rem;border-bottom:1px dashed rgba(42,181,160,.4);transition:color .2s}
-    .ml:hover{color:#fff}
-    .mls{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.5rem}
-
-    /* BUDGET */
-    .budget-box{background:var(--card);border:1px solid rgba(245,200,66,.12);border-radius:14px;overflow:hidden;margin-top:1.5rem}
-    .br{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1rem;
-      border-bottom:1px solid rgba(245,200,66,.08);font-size:.95rem}
-    .br:last-child{border-bottom:none}
-    .bl{color:rgba(240,230,204,.75)}.bv{font-weight:700;color:var(--gold)}
-
-    /* TIPS */
-    .tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin-top:1.5rem;padding-bottom:3rem}
-    .tip{background:var(--card);border:1px solid rgba(245,200,66,.12);border-radius:16px;padding:1.2rem;position:relative;overflow:hidden}
-    .tip::before{content:'';position:absolute;inset:0;opacity:.06;border-radius:16px}
-    .tip.go::before{background:var(--gold)}.tip.te::before{background:var(--teal)}
-    .tip.bl::before{background:var(--blue)}.tip.re::before{background:var(--red)}
-    .tip.pu::before{background:var(--purple)}
-    .tip-ico{font-size:2rem;margin-bottom:.6rem}
-    .tip-ttl{font-weight:700;font-size:.95rem;color:var(--gold);margin-bottom:.4rem}
-    .tip-txt{font-size:.88rem;color:rgba(240,230,204,.7);line-height:1.5}
-
-    footer{text-align:center;padding:2rem 1rem;color:rgba(240,230,204,.3);font-size:.88rem;background:#0a0a14}
-    footer strong{color:var(--gold)}
-  </style>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>🇺🇿 Узбекистан 1–5 мая</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#f5c842;--orange:#f07e26;--red:#d94f3d;--teal:#2ab5a0;--blue:#2d7dd2;--purple:#9b59b6;--green:#27ae60;--card:rgba(255,255,255,0.06)}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#110e05 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cg fill='none' stroke='rgba(245,200,66,0.07)' stroke-width='0.7'%3E%3Crect x='8' y='8' width='40' height='40'/%3E%3Cpolygon points='28,2 54,28 28,54 2,28'/%3E%3Ccircle cx='28' cy='28' r='3.5' fill='rgba(245,200,66,0.04)'/%3E%3C/g%3E%3C/svg%3E") repeat;color:#f0e6cc;overflow-x:hidden}
+.top-border{height:4px;background:linear-gradient(90deg,var(--red),var(--orange),var(--gold),var(--teal),var(--blue),var(--purple))}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cg fill='none' stroke='rgba(245,200,66,0.07)' stroke-width='0.7'%3E%3Crect x='8' y='8' width='40' height='40'/%3E%3Cpolygon points='28,2 54,28 28,54 2,28'/%3E%3Ccircle cx='28' cy='28' r='3.5' fill='rgba(245,200,66,0.04)'/%3E%3C/g%3E%3C/svg%3E") repeat,linear-gradient(180deg,rgba(17,14,5,0) 60%,#110e05 100%),linear-gradient(135deg,#3d1c00 0%,#7b3a00 30%,#1a3a4a 70%,#0a2030 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(245,200,66,.18) 0%,transparent 65%);top:-200px;right:-200px}
+.hero::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(42,181,160,.18) 0%,transparent 65%);bottom:-100px;left:-100px}
+.hero-pat{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(245,200,66,.04) 0,rgba(245,200,66,.04) 1px,transparent 0,transparent 50%);background-size:30px 30px;pointer-events:none}
+.flag{font-size:4rem;margin-bottom:1rem;position:relative;z-index:1}
+.hero h1{font-size:clamp(2.4rem,6vw,4.5rem);font-weight:900;letter-spacing:-1px;background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:1;margin-bottom:.6rem}
+.hero-sub{font-size:1.2rem;color:rgba(240,230,204,.7);position:relative;z-index:1;margin-bottom:.4rem}
+.dates-badge{display:inline-block;background:linear-gradient(90deg,var(--orange),var(--red));color:#fff;font-weight:700;padding:.45rem 1.4rem;border-radius:50px;font-size:1rem;position:relative;z-index:1;margin-top:1.2rem;box-shadow:0 4px 20px rgba(240,126,38,.4)}
+.ornament{display:flex;align-items:center;gap:.8rem;justify-content:center;margin:2rem auto 0;position:relative;z-index:1}
+.ornament span{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold))}.ornament span:last-child{transform:scaleX(-1)}
+.route-bar{display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;padding:2rem 1.5rem 0;max-width:860px;margin:0 auto}
+.rc{font-weight:700;font-size:.95rem;color:var(--gold)}.ra{color:rgba(245,200,66,.4);font-size:1.1rem}
+.nav-pills{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;padding:1.5rem 1.5rem 0;max-width:860px;margin:0 auto}
+.nav-pill{padding:.4rem 1rem;border-radius:50px;font-size:.82rem;font-weight:600;text-decoration:none;border:1px solid rgba(245,200,66,.25);color:var(--gold);transition:background .2s}
+.nav-pill:hover{background:rgba(245,200,66,.12)}
+.wrap{max-width:860px;margin:0 auto;padding:0 1.5rem}
+.sec{text-align:center;padding:3rem 0 0}.sec h2{font-size:1.9rem;font-weight:800;background:linear-gradient(90deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.sec p{color:rgba(240,230,204,.5);font-size:.95rem;margin-top:.3rem}
+.tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.2rem;margin-top:1.5rem}
+.tkt{border-radius:16px;overflow:hidden}.tkt-train{background:linear-gradient(135deg,#0d2a5e,#1a4a9e);border:1px solid rgba(255,255,255,.15)}.tkt-cx{background:linear-gradient(135deg,#1a3a1a,#2a6a2a);border:1px solid rgba(255,255,255,.15)}.tkt-hy{background:linear-gradient(135deg,#1c1060,#3b2abf);border:1px solid rgba(255,255,255,.15)}
+.tkt-head{padding:.8rem 1.1rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px dashed rgba(255,255,255,.2)}.tkt-type{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.8}.tkt-num{font-size:.7rem;opacity:.6}
+.tkt-body{padding:1rem 1.1rem}.tkt-route{display:flex;align-items:center;gap:.7rem;margin-bottom:.9rem}.tkt-city{flex:1}.tkt-time{font-size:1.5rem;font-weight:900;color:var(--gold);line-height:1.1}.tkt-name{font-size:1rem;font-weight:800;color:#fff;line-height:1.1}.tkt-date{font-size:.72rem;opacity:.6;margin-top:.1rem}.tkt-mid{text-align:center;flex-shrink:0}.tkt-dur{font-size:.7rem;opacity:.6;margin-bottom:.1rem}.tkt-arr{font-size:1.2rem;color:rgba(255,255,255,.4)}
+.tkt-notch{display:flex;align-items:center;margin:.2rem 0}.tkt-n{width:14px;height:14px;border-radius:50%;background:#110e05;flex-shrink:0}.tkt-nl{flex:1;border-top:1px dashed rgba(255,255,255,.2)}
+.tkt-meta{display:flex;gap:1.2rem;flex-wrap:wrap;font-size:.78rem;margin-top:.8rem}.tkt-ml{opacity:.5;display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.5px}.tkt-mv{color:#fff;font-weight:600}
+.tkt-foot{padding:.6rem 1.1rem;background:rgba(0,0,0,.2);font-size:.75rem;opacity:.7;display:flex;justify-content:space-between;border-top:1px dashed rgba(255,255,255,.1)}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1.5rem}
+.ph{border-radius:16px;overflow:hidden;position:relative;aspect-ratio:4/3;cursor:pointer;background:var(--card)}.ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}.ph:hover img{transform:scale(1.06)}
+.ph-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 50%);display:flex;align-items:flex-end;padding:.9rem;opacity:0;transition:opacity .3s}.ph:hover .ph-ov{opacity:1}
+.ph-lbl{font-size:.85rem;font-weight:700;color:#fff}.ph-city{font-size:.7rem;color:var(--gold);margin-top:.1rem}
+.ph-fb{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;font-size:2.2rem}.ph-fb span{font-size:.75rem;color:rgba(240,230,204,.5)}
+.accordion{margin-top:2rem;padding-bottom:3rem}
+.ai{border:1px solid rgba(245,200,66,.15);border-radius:18px;margin-bottom:1rem;overflow:hidden;transition:border-color .3s}
+.ai.open{border-color:rgba(245,200,66,.4)}
+.ah{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.4rem;cursor:pointer;user-select:none;gap:1rem;background:rgba(255,255,255,.04);transition:background .2s}
+.ah:hover{background:rgba(245,200,66,.06)}
+.ah-l{display:flex;align-items:center;gap:.9rem}.ai-ico{font-size:1.5rem;flex-shrink:0}
+.ai-title{font-size:1.05rem;font-weight:700;color:#f0e6cc}.ai-sub{font-size:.78rem;color:rgba(240,230,204,.45);margin-top:.15rem}
+.ai-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .8rem;border-radius:50px;font-size:.75rem;font-weight:600;flex-shrink:0}
+.ai-arr{font-size:.85rem;color:var(--gold);transition:transform .35s ease;flex-shrink:0}
+.ai.open .ai-arr{transform:rotate(180deg)}
+.ab{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1)}.ab-in{padding:0 1rem 1rem}
+.tl{position:relative;padding:1rem 0 .5rem}
+.tl::before{content:'';position:absolute;left:22px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),var(--teal),var(--blue),var(--purple));border-radius:2px}
+.ti{display:flex;gap:1.2rem;margin-bottom:1rem;position:relative}
+.ti-dot{flex-shrink:0;width:46px;display:flex;align-items:flex-start;justify-content:center;padding-top:.55rem}
+.dot{width:16px;height:16px;border-radius:50%;border:3px solid var(--gold);background:#110e05;position:relative;z-index:1;flex-shrink:0}
+.dot.t{border-color:var(--teal)}.dot.b{border-color:var(--blue)}.dot.r{border-color:var(--red)}.dot.p{border-color:var(--purple)}.dot.g{border-color:var(--green)}
+.tc{flex:1;background:var(--card);border:1px solid rgba(245,200,66,.12);border-radius:14px;padding:.9rem 1.2rem;transition:border-color .2s}
+.tc:hover{border-color:rgba(245,200,66,.35)}.tc.opt{border-style:dashed;opacity:.8}
+.tt{font-size:.8rem;font-weight:700;color:var(--gold);letter-spacing:.5px;margin-bottom:.2rem}
+.tn{font-size:1rem;font-weight:600;color:#f0e6cc;margin-bottom:.3rem}
+.td{font-size:.88rem;color:rgba(240,230,204,.6);line-height:1.5}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.tag{display:inline-block;padding:.2rem .7rem;border-radius:50px;font-size:.78rem;font-weight:600;background:rgba(245,200,66,.12);color:var(--gold);border:1px solid rgba(245,200,66,.2)}
+.tag.t{background:rgba(42,181,160,.12);color:var(--teal);border-color:rgba(42,181,160,.2)}.tag.b{background:rgba(45,125,210,.12);color:var(--blue);border-color:rgba(45,125,210,.2)}
+.tag.r{background:rgba(217,79,61,.12);color:var(--red);border-color:rgba(217,79,61,.2)}.tag.p{background:rgba(155,89,182,.12);color:var(--purple);border-color:rgba(155,89,182,.2)}.tag.g{background:rgba(39,174,96,.12);color:var(--green);border-color:rgba(39,174,96,.2)}
+.ml{display:inline-flex;align-items:center;gap:.3rem;font-size:.82rem;color:var(--teal);text-decoration:none;margin-top:.5rem;border-bottom:1px dashed rgba(42,181,160,.4);transition:color .2s}.ml:hover{color:#fff}
+.mls{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.5rem}
+/* BUDGET CARD */
+.day-budget{margin-top:1rem;background:linear-gradient(135deg,rgba(245,200,66,.08),rgba(240,126,38,.08));border:1px solid rgba(245,200,66,.2);border-radius:14px;padding:1rem 1.2rem}
+.db-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:.7rem;opacity:.8}
+.db-rows{display:grid;grid-template-columns:1fr 1fr;gap:.4rem .8rem}
+.db-item{display:flex;justify-content:space-between;align-items:center;font-size:.82rem}
+.db-label{color:rgba(240,230,204,.6)}.db-val{font-weight:700;color:#f0e6cc}
+.db-total{display:flex;justify-content:space-between;align-items:center;margin-top:.7rem;padding-top:.7rem;border-top:1px solid rgba(245,200,66,.2)}
+.db-total-label{font-size:.85rem;font-weight:700;color:var(--gold)}.db-total-val{font-size:1.1rem;font-weight:900;color:var(--gold)}
+.db-note{font-size:.75rem;color:rgba(240,230,204,.4);margin-top:.4rem}
+.budget-box{background:var(--card);border:1px solid rgba(245,200,66,.12);border-radius:14px;overflow:hidden;margin-top:1.5rem}
+.br{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1rem;border-bottom:1px solid rgba(245,200,66,.08);font-size:.95rem}
+.br:last-child{border-bottom:none}.bl{color:rgba(240,230,204,.75)}.bv{font-weight:700;color:var(--gold)}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin-top:1.5rem;padding-bottom:3rem}
+.tip{background:var(--card);border:1px solid rgba(245,200,66,.12);border-radius:16px;padding:1.2rem;position:relative;overflow:hidden}
+.tip::before{content:'';position:absolute;inset:0;opacity:.06;border-radius:16px}
+.tip.go::before{background:var(--gold)}.tip.te::before{background:var(--teal)}.tip.bl2::before{background:var(--blue)}.tip.re::before{background:var(--red)}.tip.pu::before{background:var(--purple)}
+.tip-ico{font-size:2rem;margin-bottom:.6rem}.tip-ttl{font-weight:700;font-size:.95rem;color:var(--gold);margin-bottom:.4rem}.tip-txt{font-size:.88rem;color:rgba(240,230,204,.7);line-height:1.5}
+footer{text-align:center;padding:2rem 1rem;color:rgba(240,230,204,.3);font-size:.88rem;background:#0a0a14 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cg fill='none' stroke='rgba(245,200,66,0.07)' stroke-width='0.7'%3E%3Crect x='8' y='8' width='40' height='40'/%3E%3Cpolygon points='28,2 54,28 28,54 2,28'/%3E%3Ccircle cx='28' cy='28' r='3.5' fill='rgba(245,200,66,0.04)'/%3E%3C/g%3E%3C/svg%3E") repeat}footer strong{color:var(--gold)}
+</style>
 </head>
 <body>
-
 <div class="top-border"></div>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-pat"></div>
-  <div class="flag">🇺🇿</div>
-  <h1>Узбекистан</h1>
-  <p class="hero-sub">Ташкент · Бухара · Самарканд</p>
-  <div class="dates-badge">✈️ 1–5 мая 2026</div>
-  <div class="ornament"><span></span><span style="color:var(--gold)">❖</span><span></span></div>
+<div class="hero-pat"></div>
+<div class="flag">🇺🇿</div>
+<h1>Узбекистан</h1>
+<p class="hero-sub">Ташкент · Бухара · Самарканд</p>
+<div class="dates-badge">✈️ 1–5 мая 2026</div>
+<div class="ornament"><span></span><span style="color:var(--gold)">❖</span><span></span></div>
 </section>
 
-<!-- МАРШРУТ -->
 <div class="route-bar">
-  <span class="rc">🛬 Ташкент</span><span class="ra">→</span>
-  <span class="rc">🚄 Бухара</span><span class="ra">→</span>
-  <span class="rc">🚄 Самарканд</span><span class="ra">→</span>
-  <span class="rc">✈️ Ташкент</span><span class="ra">→</span>
-  <span class="rc">🛫 Бишкек</span>
+<span class="rc">🛬 Ташкент</span><span class="ra">→</span>
+<span class="rc">🚄 Бухара</span><span class="ra">→</span>
+<span class="rc">🚄 Самарканд</span><span class="ra">→</span>
+<span class="rc">✈️ Ташкент</span><span class="ra">→</span>
+<span class="rc">🛫 Бишкек</span>
 </div>
 
-<!-- NAV -->
 <div class="nav-pills">
-  <a href="#tickets" class="nav-pill">🎫 Билеты</a>
-  <a href="#photos" class="nav-pill">📸 Фото</a>
-  <a href="#days" class="nav-pill">📅 Программа</a>
-  <a href="#budget" class="nav-pill">💰 Бюджет</a>
+<a href="#tickets" class="nav-pill">🎫 Билеты</a>
+<a href="#photos" class="nav-pill">📸 Фото</a>
+<a href="#days" class="nav-pill">📅 Программа</a>
+<a href="#budget" class="nav-pill">💰 Бюджет</a>
 </div>
 
-<!-- ══════════════ БИЛЕТЫ ══════════════ -->
+<!-- TICKETS -->
 <div class="wrap" id="tickets">
-  <div class="sec"><h2>🎫 Билеты</h2><p>Aijamal Galaeva · Ruslan Kovalenko</p></div>
-  <div class="tickets">
-
-    <!-- Бишкек → Ташкент -->
-    <div class="tkt tkt-cx">
-      <div class="tkt-head"><span class="tkt-type">✈️ Центрум Эйр C6</span><span class="tkt-num">Рейс 220</span></div>
-      <div class="tkt-body">
-        <div class="tkt-route">
-          <div class="tkt-city"><div class="tkt-time">14:20</div><div class="tkt-name">Бишкек</div><div class="tkt-date">01 мая · BSZ Манас</div></div>
-          <div class="tkt-mid"><div class="tkt-dur">0ч 40м</div><div class="tkt-arr">→</div></div>
-          <div class="tkt-city" style="text-align:right"><div class="tkt-time">15:00</div><div class="tkt-name">Ташкент</div><div class="tkt-date">01 мая · TAS</div></div>
-        </div>
-        <div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
-        <div class="tkt-meta">
-          <div><span class="tkt-ml">Багаж</span><span class="tkt-mv">23 кг + 8 кг</span></div>
-          <div><span class="tkt-ml">Самолёт</span><span class="tkt-mv">A320</span></div>
-          <div><span class="tkt-ml">Бронь</span><span class="tkt-mv">DHFFAE</span></div>
-        </div>
-      </div>
-      <div class="tkt-foot"><span>Регистрация за 24 ч до вылета</span><span>✅ Подтверждён</span></div>
-    </div>
-
-    <!-- Ташкент → Бухара (поезд) -->
-    <div class="tkt tkt-train">
-      <div class="tkt-head"><span class="tkt-type">🚄 O'zbekiston Temir Yo'llari</span><span class="tkt-num">712ФА</span></div>
-      <div class="tkt-body">
-        <div class="tkt-route">
-          <div class="tkt-city"><div class="tkt-time">20:32</div><div class="tkt-name">Ташкент</div><div class="tkt-date">01 мая · Пасс. центр.</div></div>
-          <div class="tkt-mid"><div class="tkt-dur">5ч 57м</div><div class="tkt-arr">→</div></div>
-          <div class="tkt-city" style="text-align:right"><div class="tkt-time">02:29</div><div class="tkt-name">Бухара</div><div class="tkt-date">02 мая · Бухара 1</div></div>
-        </div>
-        <div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
-        <div class="tkt-meta">
-          <div><span class="tkt-ml">Вагон</span><span class="tkt-mv">06</span></div>
-          <div><span class="tkt-ml">Места</span><span class="tkt-mv">017 · 018</span></div>
-          <div><span class="tkt-ml">Класс</span><span class="tkt-mv">СИД (2В)</span></div>
-          <div><span class="tkt-ml">Цена</span><span class="tkt-mv">276 820 × 2</span></div>
-        </div>
-      </div>
-      <div class="tkt-foot"><span>Закрытие регистрации за 30 мин</span><span>✅ Оплачен</span></div>
-    </div>
-
-    <!-- Бухара → Самарканд (поезд) -->
-    <div class="tkt tkt-train">
-      <div class="tkt-head"><span class="tkt-type">🚄 O'zbekiston Temir Yo'llari</span><span class="tkt-num">777ФА</span></div>
-      <div class="tkt-body">
-        <div class="tkt-route">
-          <div class="tkt-city"><div class="tkt-time">18:08</div><div class="tkt-name">Бухара</div><div class="tkt-date">03 мая · Бухара 1</div></div>
-          <div class="tkt-mid"><div class="tkt-dur">1ч 43м</div><div class="tkt-arr">→</div></div>
-          <div class="tkt-city" style="text-align:right"><div class="tkt-time">19:51</div><div class="tkt-name">Самарканд</div><div class="tkt-date">03 мая</div></div>
-        </div>
-        <div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
-        <div class="tkt-meta">
-          <div><span class="tkt-ml">Вагон</span><span class="tkt-mv">04</span></div>
-          <div><span class="tkt-ml">Места</span><span class="tkt-mv">017 · 018</span></div>
-          <div><span class="tkt-ml">Класс</span><span class="tkt-mv">СИД (2Е)</span></div>
-          <div><span class="tkt-ml">Цена</span><span class="tkt-mv">225 000 × 2</span></div>
-        </div>
-      </div>
-      <div class="tkt-foot"><span>Закрытие регистрации за 30 мин</span><span>✅ Оплачен</span></div>
-    </div>
-
-    <!-- Самарканд → Ташкент (самолёт) -->
-    <div class="tkt tkt-hy">
-      <div class="tkt-head"><span class="tkt-type">✈️ Uzbekistan Airways</span><span class="tkt-num">Рейс HY46</span></div>
-      <div class="tkt-body">
-        <div class="tkt-route">
-          <div class="tkt-city"><div class="tkt-time">22:40</div><div class="tkt-name">Самарканд</div><div class="tkt-date">04 мая · SKD</div></div>
-          <div class="tkt-mid"><div class="tkt-dur">0ч 50м</div><div class="tkt-arr">→</div></div>
-          <div class="tkt-city" style="text-align:right"><div class="tkt-time">23:30</div><div class="tkt-name">Ташкент</div><div class="tkt-date">04 мая · TAS T3</div></div>
-        </div>
-        <div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
-        <div class="tkt-meta">
-          <div><span class="tkt-ml">Бронь</span><span class="tkt-mv">ZOLQU4</span></div>
-          <div><span class="tkt-ml">Терминал</span><span class="tkt-mv">T3</span></div>
-          <div><span class="tkt-ml">Рег. до</span><span class="tkt-mv">22:10</span></div>
-        </div>
-      </div>
-      <div class="tkt-foot"><span>№ 250-2117420462 / 463</span><span>✅ Подтверждён</span></div>
-    </div>
-
-    <!-- Ташкент → Бишкек -->
-    <div class="tkt tkt-cx">
-      <div class="tkt-head"><span class="tkt-type">✈️ Центрум Эйр C6</span><span class="tkt-num">Рейс 219</span></div>
-      <div class="tkt-body">
-        <div class="tkt-route">
-          <div class="tkt-city"><div class="tkt-time">10:55</div><div class="tkt-name">Ташкент</div><div class="tkt-date">05 мая · TAS</div></div>
-          <div class="tkt-mid"><div class="tkt-dur">2ч 20м</div><div class="tkt-arr">→</div></div>
-          <div class="tkt-city" style="text-align:right"><div class="tkt-time">13:15</div><div class="tkt-name">Бишкек</div><div class="tkt-date">05 мая · BSZ Манас</div></div>
-        </div>
-        <div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
-        <div class="tkt-meta">
-          <div><span class="tkt-ml">Багаж</span><span class="tkt-mv">23 кг + 8 кг</span></div>
-          <div><span class="tkt-ml">Самолёт</span><span class="tkt-mv">A20N</span></div>
-          <div><span class="tkt-ml">Бронь</span><span class="tkt-mv">DHFFAE</span></div>
-        </div>
-      </div>
-      <div class="tkt-foot"><span>Выезд не позже 10:30!</span><span>✅ Подтверждён</span></div>
-    </div>
-
-  </div>
+<div class="sec"><h2>🎫 Билеты</h2><p>Aijamal Galaeva · Ruslan Kovalenko</p></div>
+<div class="tickets">
+<div class="tkt tkt-cx">
+<div class="tkt-head"><span class="tkt-type">✈️ Центрум Эйр C6</span><span class="tkt-num">Рейс 220</span></div>
+<div class="tkt-body">
+<div class="tkt-route">
+<div class="tkt-city"><div class="tkt-time">14:20</div><div class="tkt-name">Бишкек</div><div class="tkt-date">01 мая · BSZ Манас</div></div>
+<div class="tkt-mid"><div class="tkt-dur">0ч 40м</div><div class="tkt-arr">→</div></div>
+<div class="tkt-city" style="text-align:right"><div class="tkt-time">15:00</div><div class="tkt-name">Ташкент</div><div class="tkt-date">01 мая · TAS</div></div>
+</div>
+<div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
+<div class="tkt-meta">
+<div><span class="tkt-ml">Багаж</span><span class="tkt-mv">23 кг + 8 кг</span></div>
+<div><span class="tkt-ml">Самолёт</span><span class="tkt-mv">A320</span></div>
+<div><span class="tkt-ml">Бронь</span><span class="tkt-mv">DHFFAE</span></div>
+</div></div>
+<div class="tkt-foot"><span>Регистрация за 24 ч</span><span>✅ Подтверждён</span></div>
 </div>
 
-<!-- ══════════════ ФОТО ══════════════ -->
+<div class="tkt tkt-train">
+<div class="tkt-head"><span class="tkt-type">🚄 O'zbekiston Temir Yo'llari</span><span class="tkt-num">712ФА</span></div>
+<div class="tkt-body">
+<div class="tkt-route">
+<div class="tkt-city"><div class="tkt-time">20:32</div><div class="tkt-name">Ташкент</div><div class="tkt-date">01 мая · Пасс. центр.</div></div>
+<div class="tkt-mid"><div class="tkt-dur">5ч 57м</div><div class="tkt-arr">→</div></div>
+<div class="tkt-city" style="text-align:right"><div class="tkt-time">02:29</div><div class="tkt-name">Бухара</div><div class="tkt-date">02 мая · Бухара 1</div></div>
+</div>
+<div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
+<div class="tkt-meta">
+<div><span class="tkt-ml">Вагон</span><span class="tkt-mv">06</span></div>
+<div><span class="tkt-ml">Места</span><span class="tkt-mv">017 · 018</span></div>
+<div><span class="tkt-ml">Класс</span><span class="tkt-mv">СИД (2В)</span></div>
+<div><span class="tkt-ml">Цена</span><span class="tkt-mv">276 820 × 2</span></div>
+</div></div>
+<div class="tkt-foot"><span>Закрытие за 30 мин до отпр.</span><span>✅ Оплачен</span></div>
+</div>
+
+<div class="tkt tkt-train">
+<div class="tkt-head"><span class="tkt-type">🚄 O'zbekiston Temir Yo'llari</span><span class="tkt-num">777ФА</span></div>
+<div class="tkt-body">
+<div class="tkt-route">
+<div class="tkt-city"><div class="tkt-time">18:08</div><div class="tkt-name">Бухара</div><div class="tkt-date">03 мая · Бухара 1</div></div>
+<div class="tkt-mid"><div class="tkt-dur">1ч 43м</div><div class="tkt-arr">→</div></div>
+<div class="tkt-city" style="text-align:right"><div class="tkt-time">19:51</div><div class="tkt-name">Самарканд</div><div class="tkt-date">03 мая</div></div>
+</div>
+<div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
+<div class="tkt-meta">
+<div><span class="tkt-ml">Вагон</span><span class="tkt-mv">04</span></div>
+<div><span class="tkt-ml">Места</span><span class="tkt-mv">017 · 018</span></div>
+<div><span class="tkt-ml">Класс</span><span class="tkt-mv">СИД (2Е)</span></div>
+<div><span class="tkt-ml">Цена</span><span class="tkt-mv">225 000 × 2</span></div>
+</div></div>
+<div class="tkt-foot"><span>Закрытие за 30 мин до отпр.</span><span>✅ Оплачен</span></div>
+</div>
+
+<div class="tkt tkt-hy">
+<div class="tkt-head"><span class="tkt-type">✈️ Uzbekistan Airways</span><span class="tkt-num">Рейс HY46</span></div>
+<div class="tkt-body">
+<div class="tkt-route">
+<div class="tkt-city"><div class="tkt-time">22:40</div><div class="tkt-name">Самарканд</div><div class="tkt-date">04 мая · SKD</div></div>
+<div class="tkt-mid"><div class="tkt-dur">0ч 50м</div><div class="tkt-arr">→</div></div>
+<div class="tkt-city" style="text-align:right"><div class="tkt-time">23:30</div><div class="tkt-name">Ташкент</div><div class="tkt-date">04 мая · TAS T3</div></div>
+</div>
+<div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
+<div class="tkt-meta">
+<div><span class="tkt-ml">Бронь</span><span class="tkt-mv">ZOLQU4</span></div>
+<div><span class="tkt-ml">Терминал</span><span class="tkt-mv">T3</span></div>
+<div><span class="tkt-ml">Рег. до</span><span class="tkt-mv">22:10</span></div>
+</div></div>
+<div class="tkt-foot"><span>№ 250-2117420462 / 463</span><span>✅ Подтверждён</span></div>
+</div>
+
+<div class="tkt tkt-cx">
+<div class="tkt-head"><span class="tkt-type">✈️ Центрум Эйр C6</span><span class="tkt-num">Рейс 219</span></div>
+<div class="tkt-body">
+<div class="tkt-route">
+<div class="tkt-city"><div class="tkt-time">10:55</div><div class="tkt-name">Ташкент</div><div class="tkt-date">05 мая · TAS</div></div>
+<div class="tkt-mid"><div class="tkt-dur">2ч 20м</div><div class="tkt-arr">→</div></div>
+<div class="tkt-city" style="text-align:right"><div class="tkt-time">13:15</div><div class="tkt-name">Бишкек</div><div class="tkt-date">05 мая · BSZ Манас</div></div>
+</div>
+<div class="tkt-notch"><div class="tkt-n"></div><div class="tkt-nl"></div><div class="tkt-n"></div></div>
+<div class="tkt-meta">
+<div><span class="tkt-ml">Багаж</span><span class="tkt-mv">23 кг + 8 кг</span></div>
+<div><span class="tkt-ml">Самолёт</span><span class="tkt-mv">A20N</span></div>
+<div><span class="tkt-ml">Бронь</span><span class="tkt-mv">DHFFAE</span></div>
+</div></div>
+<div class="tkt-foot"><span>Выезд не позже 10:30!</span><span>✅ Подтверждён</span></div>
+</div>
+</div>
+</div>
+
+<!-- PHOTOS -->
 <div class="wrap" id="photos">
-  <div class="sec"><h2>📸 Фотографии</h2><p>Наведи чтобы увидеть подпись</p></div>
-  <div class="photo-grid">
-    <div class="ph">
-      <img src="IMG_3289.JPG" alt="Узбекистан" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#3d1c00,#7b3a00)\'>🚪<span>Дверь</span></div>'"/>
-      <div class="ph-ov"><div><div class="ph-lbl">🚪 Старинная дверь</div><div class="ph-city">Узбекистан · май 2026</div></div></div>
-    </div>
-    <div class="ph">
-      <img src="IMG_3290.JPG" alt="Узбекистан" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#1a0a3a,#3b2abf)\'>🏛<span>Регистан</span></div>'"/>
-      <div class="ph-ov"><div><div class="ph-lbl">🏛 Регистан</div><div class="ph-city">Самарканд · май 2026</div></div></div>
-    </div>
-    <div class="ph">
-      <img src="IMG_3291.JPG" alt="Узбекистан" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#0d2a5e,#1a6a4a)\'>🕌<span>Архитектура</span></div>'"/>
-      <div class="ph-ov"><div><div class="ph-lbl">🕌 Архитектура</div><div class="ph-city">Самарканд · май 2026</div></div></div>
-    </div>
-    <div class="ph">
-      <img src="IMG_3292.JPG" alt="Узбекистан" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#0a3a2a,#11998e)\'>🌀<span>Арка</span></div>'"/>
-      <div class="ph-ov"><div><div class="ph-lbl">🌀 Арка</div><div class="ph-city">Самарканд · май 2026</div></div></div>
-    </div>
-    <div class="ph">
-      <img src="IMG_3293.JPG" alt="Узбекистан" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#1a1208,#5a3a08)\'>☕<span>Кофе</span></div>'"/>
-      <div class="ph-ov"><div><div class="ph-lbl">☕ Утренний кофе</div><div class="ph-city">Самарканд · май 2026</div></div></div>
-    </div>
-    <div class="ph">
-      <img src="IMG_3294.JPG" alt="Узбекистан" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#0a2030,#1a5a4a)\'>🫖<span>Чайхана</span></div>'"/>
-      <div class="ph-ov"><div><div class="ph-lbl">🫖 Чайхана</div><div class="ph-city">Бухара · май 2026</div></div></div>
-    </div>
-  </div>
+<div class="sec"><h2>📸 Фотографии</h2><p>Наведи чтобы увидеть подпись</p></div>
+<div class="photo-grid">
+<div class="ph"><img src="IMG_3289.JPG" alt="" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#3d1c00,#7b3a00)\'>🚪<span>Дверь</span></div>'"/><div class="ph-ov"><div><div class="ph-lbl">🚪 Старинная дверь</div><div class="ph-city">Узбекистан · май 2026</div></div></div></div>
+<div class="ph"><img src="IMG_3290.JPG" alt="" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#1a0a3a,#3b2abf)\'>🏛<span>Регистан</span></div>'"/><div class="ph-ov"><div><div class="ph-lbl">🏛 Регистан</div><div class="ph-city">Самарканд · май 2026</div></div></div></div>
+<div class="ph"><img src="IMG_3291.JPG" alt="" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#0d2a5e,#1a6a4a)\'>🕌<span>Архитектура</span></div>'"/><div class="ph-ov"><div><div class="ph-lbl">🕌 Архитектура</div><div class="ph-city">Самарканд · май 2026</div></div></div></div>
+<div class="ph"><img src="IMG_3292.JPG" alt="" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#0a3a2a,#11998e)\'>🌀<span>Арка</span></div>'"/><div class="ph-ov"><div><div class="ph-lbl">🌀 Арка с куполом</div><div class="ph-city">Самарканд · май 2026</div></div></div></div>
+<div class="ph"><img src="IMG_3293.JPG" alt="" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#1a1208,#5a3a08)\'>☕<span>Кофе</span></div>'"/><div class="ph-ov"><div><div class="ph-lbl">☕ Утренний кофе</div><div class="ph-city">Самарканд · май 2026</div></div></div></div>
+<div class="ph"><img src="IMG_3294.JPG" alt="" onerror="this.parentNode.innerHTML='<div class=\'ph-fb\' style=\'background:linear-gradient(135deg,#0a2030,#1a5a4a)\'>🫖<span>Чайхана</span></div>'"/><div class="ph-ov"><div><div class="ph-lbl">🫖 Чайхана</div><div class="ph-city">Бухара · май 2026</div></div></div></div>
+</div>
 </div>
 
-<!-- ══════════════ ПРОГРАММА ══════════════ -->
+<!-- DAYS ACCORDION -->
 <div class="wrap" id="days">
-  <div class="sec"><h2>📅 Программа по дням</h2><p>Нажми на день чтобы раскрыть маршрут</p></div>
-  <div class="accordion">
+<div class="sec"><h2>📅 Программа по дням</h2><p>Нажми на день чтобы раскрыть маршрут и бюджет</p></div>
+<div class="accordion">
 
-    <!-- ДЕНЬ 1 -->
-    <div class="ai" id="day1">
-      <div class="ah" onclick="tog(this)">
-        <div class="ah-l"><span class="ai-ico">✈️</span>
-          <div><div class="ai-title">1 мая — Ташкент</div><div class="ai-sub">Прилёт · Tashkent City · Поезд на Бухару</div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:.6rem">
-          <span class="ai-badge" style="background:rgba(240,126,38,.15);color:var(--orange);border:1px solid rgba(240,126,38,.25)">🌆 Ташкент</span>
-          <span class="ai-arr">▼</span>
-        </div>
-      </div>
-      <div class="ab"><div class="ab-in"><div class="tl">
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">15:00 — 15:45</div><div class="tn">✈️ Прилёт</div><div class="td">Выход из аэропорта ~15:45</div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">16:10 — 17:20</div><div class="tn">🌳 Tashkent City</div><div class="td">Прогулка с чемоданами — парк, озеро, фото</div><div class="tags"><span class="tag">парк</span><span class="tag t">озеро</span><span class="tag">фото</span></div><a href="https://maps.google.com/?q=Tashkent+City+Park" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">17:30</div><div class="tn">🍽 Ужин</div><div class="td">На выбор:</div><div class="tags"><span class="tag r">Afsona</span><span class="tag r">Caravan</span></div><div class="mls"><a href="https://maps.google.com/?q=Afsona+Tashkent" target="_blank" class="ml">📍 Afsona →</a><a href="https://maps.google.com/?q=Caravan+Tashkent" target="_blank" class="ml">📍 Caravan →</a></div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">18:40 → 19:48</div><div class="tn">🚄 Поезд → Бухара</div><div class="td">Выезд на вокзал 18:40 · Отправление 19:48</div></div></div>
-      </div></div></div>
-    </div>
+<!-- ДЕНЬ 1 -->
+<div class="ai" id="day1">
+<div class="ah" onclick="tog(this)">
+<div class="ah-l"><span class="ai-ico">✈️</span>
+<div><div class="ai-title">1 мая — Ташкент</div><div class="ai-sub">Прилёт · Tashkent City · Поезд на Бухару</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:.6rem">
+<span class="ai-badge" style="background:rgba(240,126,38,.15);color:var(--orange);border:1px solid rgba(240,126,38,.25)">🌆 Ташкент</span>
+<span class="ai-arr">▼</span>
+</div>
+</div>
+<div class="ab"><div class="ab-in"><div class="tl">
+<div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">15:00 — 15:45</div><div class="tn">✈️ Прилёт</div><div class="td">Выход из аэропорта ~15:45</div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">16:10 — 17:20</div><div class="tn">🌳 Tashkent City</div><div class="td">Прогулка с чемоданами — парк, озеро, фото</div><div class="tags"><span class="tag">парк</span><span class="tag t">озеро</span></div><a href="https://maps.google.com/?q=Tashkent+City+Park" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">17:30</div><div class="tn">🍽 Ужин</div><div class="tags"><span class="tag r">Afsona</span><span class="tag r">Caravan</span></div><div class="mls"><a href="https://maps.google.com/?q=Afsona+Tashkent" target="_blank" class="ml">📍 Afsona →</a><a href="https://maps.google.com/?q=Caravan+Tashkent" target="_blank" class="ml">📍 Caravan →</a></div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">18:40 → 19:48</div><div class="tn">🚄 Поезд → Бухара</div><div class="td">Выезд на вокзал 18:40 · Отправление 19:48 · Вагон 06 · Места 017/018</div></div></div>
+</div>
+<div class="day-budget">
+<div class="db-title">💰 Расходы дня</div>
+<div class="db-rows">
+<div class="db-item"><span class="db-label">✈️ Перелёт BSZ→TAS</span><span class="db-val">$226</span></div>
+<div class="db-item"><span class="db-label">🍽 Ужин в Ташкенте</span><span class="db-val">$60</span></div>
+<div class="db-item"><span class="db-label">🚄 Поезд TAS→BUH</span><span class="db-val">$45</span></div>
+<div class="db-item"><span class="db-label">🚕 Такси / прочее</span><span class="db-val">~$10</span></div>
+</div>
+<div class="db-total"><span class="db-total-label">Итого</span><span class="db-total-val">~$341</span></div>
+<div class="db-note">Основные расходы — транспорт</div>
+</div>
+</div></div>
+</div>
 
-    <!-- ДЕНЬ 2 -->
-    <div class="ai" id="day2">
-      <div class="ah" onclick="tog(this)">
-        <div class="ah-l"><span class="ai-ico">🚄</span>
-          <div><div class="ai-title">2 мая — Бухара</div><div class="ai-sub">Прибытие ночью · Po-i-Kalyan · Ark · Шоппинг чапана · Ужин Ayvan</div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:.6rem">
-          <span class="ai-badge" style="background:rgba(42,181,160,.15);color:var(--teal);border:1px solid rgba(42,181,160,.25)">🕌 Бухара</span>
-          <span class="ai-arr">▼</span>
-        </div>
-      </div>
-      <div class="ab"><div class="ab-in"><div class="tl">
-        <div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">02:23</div><div class="tn">🛏 Прибытие → сон</div><div class="td">Ночное прибытие, заселение 😴</div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">08:30</div><div class="tn">🕌 Po-i-Kalyan</div><div class="td">Архитектурный ансамбль — лучшие фото утром!</div><div class="tags"><span class="tag">архитектура</span><span class="tag">фото</span></div><a href="https://maps.google.com/?q=Poi+Kalyan+Bukhara" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">10:00</div><div class="tn">🏰 Ark of Bukhara</div><div class="td">Бухарская крепость — цитадель правителей</div><div class="tags"><span class="tag t">история</span></div><a href="https://maps.google.com/?q=Ark+Bukhara" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot p"></div></div><div class="tc"><div class="tt">11:00 — 13:00</div><div class="tn">🧵 Шоппинг чапана</div><div class="td">Toqi Telpak Furushon и Lyabi-Hauz<br>💡 Не покупать в первой лавке!</div><div class="tags"><span class="tag p">шоппинг</span><span class="tag p">чапан</span></div><div class="mls"><a href="https://maps.google.com/?q=Toqi+Telpak+Furushon" target="_blank" class="ml">📍 Toqi →</a><a href="https://maps.google.com/?q=Lyabi+Hauz" target="_blank" class="ml">📍 Lyabi-Hauz →</a></div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">13:00 — 16:30</div><div class="tn">🍲 Обед / Отдых → Прогулка</div><div class="td">Обед · 16:30 прогулка Lyabi-Hauz</div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">19:00</div><div class="tn">🍽 Ужин — Ayvan</div><div class="td">Ресторан с видом на Lyabi-Hauz — бронь обязательна!</div><div class="tags"><span class="tag r">бронь</span></div><a href="https://maps.google.com/?q=Ayvan+Bukhara" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">21:00</div><div class="tn">🌙 Вечерний Po-i-Kalyan</div><div class="td">Ансамбль в ночной подсветке</div></div></div>
-      </div></div></div>
-    </div>
+<!-- ДЕНЬ 2 -->
+<div class="ai" id="day2">
+<div class="ah" onclick="tog(this)">
+<div class="ah-l"><span class="ai-ico">🚄</span>
+<div><div class="ai-title">2 мая — Бухара</div><div class="ai-sub">Po-i-Kalyan · Ark · Шоппинг чапана · Ужин Ayvan</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:.6rem">
+<span class="ai-badge" style="background:rgba(42,181,160,.15);color:var(--teal);border:1px solid rgba(42,181,160,.25)">🕌 Бухара</span>
+<span class="ai-arr">▼</span>
+</div>
+</div>
+<div class="ab"><div class="ab-in"><div class="tl">
+<div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">02:23</div><div class="tn">🛏 Прибытие → сон</div><div class="td">Ночное прибытие, заселение 😴</div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">08:30</div><div class="tn">🕌 Po-i-Kalyan</div><div class="td">Архитектурный ансамбль — лучшие фото утром!</div><div class="tags"><span class="tag">3 USD</span></div><a href="https://maps.google.com/?q=Poi+Kalyan+Bukhara" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">10:00</div><div class="tn">🏰 Ark of Bukhara</div><div class="td">Бухарская крепость — цитадель правителей</div><div class="tags"><span class="tag t">6 USD</span></div><a href="https://maps.google.com/?q=Ark+Bukhara" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot p"></div></div><div class="tc"><div class="tt">11:00 — 13:00</div><div class="tn">🧵 Шоппинг чапана</div><div class="td">Toqi Telpak Furushon и Lyabi-Hauz · бесплатно<br>💡 Не покупать в первой лавке!</div><div class="mls"><a href="https://maps.google.com/?q=Toqi+Telpak+Furushon" target="_blank" class="ml">📍 Toqi →</a><a href="https://maps.google.com/?q=Lyabi+Hauz" target="_blank" class="ml">📍 Lyabi-Hauz →</a></div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">19:00</div><div class="tn">🍽 Ужин — Ayvan</div><div class="td">Ресторан с видом на Lyabi-Hauz</div><div class="tags"><span class="tag r">🔖 забронено</span></div><a href="https://maps.google.com/?q=Ayvan+Bukhara" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">21:00</div><div class="tn">🌙 Вечерний Po-i-Kalyan</div><div class="td">Ансамбль в ночной подсветке</div></div></div>
+</div>
+<div class="day-budget">
+<div class="db-title">💰 Расходы дня</div>
+<div class="db-rows">
+<div class="db-item"><span class="db-label">🏨 Отель (½ от $154)</span><span class="db-val">$77</span></div>
+<div class="db-item"><span class="db-label">🏛 Входы (Po-i-Kalyan + Ark)</span><span class="db-val">$9</span></div>
+<div class="db-item"><span class="db-label">🍽 Еда</span><span class="db-val">~$90</span></div>
+<div class="db-item"><span class="db-label">🍷 Ужин Ayvan</span><span class="db-val">забронено</span></div>
+</div>
+<div class="db-total"><span class="db-total-label">Итого (без Ayvan)</span><span class="db-total-val">~$176</span></div>
+<div class="db-note">Отель Bukhara на 2 ночи = $154 total</div>
+</div>
+</div></div>
+</div>
 
-    <!-- ДЕНЬ 3 -->
-    <div class="ai" id="day3">
-      <div class="ah" onclick="tog(this)">
-        <div class="ah-l"><span class="ai-ico">🏛</span>
-          <div><div class="ai-title">3 мая — Бухара → Самарканд</div><div class="ai-sub">Ismail Samani · Chor Minor · Silk Road Tea · Поезд · Заселение</div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:.6rem">
-          <span class="ai-badge" style="background:rgba(45,125,210,.15);color:var(--blue);border:1px solid rgba(45,125,210,.25)">🚄 Переезд</span>
-          <span class="ai-arr">▼</span>
-        </div>
-      </div>
-      <div class="ab"><div class="ab-in"><div class="tl">
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">07:00</div><div class="tn">🕌 Ismail Samani Mausoleum</div><div class="td">Один из древнейших памятников Средней Азии (IX–X вв.)</div><a href="https://maps.google.com/?q=Ismail+Samani+Mausoleum" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">08:00</div><div class="tn">🏛 Chor Minor</div><div class="td">Уникальная мечеть с четырьмя минаретами</div><a href="https://maps.google.com/?q=Chor+Minor" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">10:00</div><div class="tn">☕ Silk Road Tea House</div><div class="td">Чай в атмосферной чайхане</div><a href="https://maps.google.com/?q=Silk+Road+Tea+House+Bukhara" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">12:00 — 16:00</div><div class="tn">🍲 Обед · Свободное время</div><div class="td">Покупки, отдых, прогулка</div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">18:08 → 19:51</div><div class="tn">🚄 Поезд → Самарканд</div><div class="td">Прибытие 19:51</div><div class="tags"><span class="tag b">777ФА · вагон 04 · места 017/018</span></div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot g"></div></div><div class="tc"><div class="tt">20:15</div><div class="tn">🏨 Заселение — H Boykaro 37</div><a href="https://maps.google.com/?q=H+Boykaro+37+Samarkand" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">21:00</div><div class="tn">🍽 Лёгкий ужин</div><div class="td">Рядом с отелем</div></div></div>
-      </div></div></div>
-    </div>
+<!-- ДЕНЬ 3 -->
+<div class="ai" id="day3">
+<div class="ah" onclick="tog(this)">
+<div class="ah-l"><span class="ai-ico">🏛</span>
+<div><div class="ai-title">3 мая — Бухара → Самарканд</div><div class="ai-sub">Ismail Samani · Chor Minor · Silk Road Tea · Поезд · Заселение</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:.6rem">
+<span class="ai-badge" style="background:rgba(45,125,210,.15);color:var(--blue);border:1px solid rgba(45,125,210,.25)">🚄 Переезд</span>
+<span class="ai-arr">▼</span>
+</div>
+</div>
+<div class="ab"><div class="ab-in"><div class="tl">
+<div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">07:00</div><div class="tn">🕌 Ismail Samani Mausoleum</div><div class="td">IX–X вв. — один из древнейших памятников Средней Азии</div><div class="tags"><span class="tag">2 USD</span></div><a href="https://maps.google.com/?q=Ismail+Samani+Mausoleum" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">08:00</div><div class="tn">🏛 Chor Minor</div><div class="td">Уникальная мечеть с четырьмя минаретами</div><div class="tags"><span class="tag t">2 USD</span></div><a href="https://maps.google.com/?q=Chor+Minor" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">10:00</div><div class="tn">☕ Silk Road Tea House</div><div class="td">Атмосферная чайхана</div><a href="https://maps.google.com/?q=Silk+Road+Tea+House+Bukhara" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">12:00 — 16:00</div><div class="tn">🍲 Обед · Свободное время</div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">18:08 → 19:51</div><div class="tn">🚄 Поезд → Самарканд</div><div class="td">Прибытие 19:51 · Вагон 04 · Места 017/018</div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot g"></div></div><div class="tc"><div class="tt">20:15</div><div class="tn">🏨 Заселение — H Boykaro 37</div><a href="https://maps.google.com/?q=H+Boykaro+37+Samarkand" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">21:00</div><div class="tn">🍽 Лёгкий ужин рядом с отелем</div></div></div>
+</div>
+<div class="day-budget">
+<div class="db-title">💰 Расходы дня</div>
+<div class="db-rows">
+<div class="db-item"><span class="db-label">🏨 Отель Бухара (½ от $154)</span><span class="db-val">$77</span></div>
+<div class="db-item"><span class="db-label">🏛 Входы (Chor Minor + Samani)</span><span class="db-val">$4</span></div>
+<div class="db-item"><span class="db-label">🚄 Поезд BUH→SAM</span><span class="db-val">$40</span></div>
+<div class="db-item"><span class="db-label">🏨 Отель Самарканд</span><span class="db-val">$61</span></div>
+<div class="db-item"><span class="db-label">🍽 Еда</span><span class="db-val">~$90</span></div>
+</div>
+<div class="db-total"><span class="db-total-label">Итого</span><span class="db-total-val">~$272</span></div>
+<div class="db-note">Самый дорогой день — двойные расходы на жильё</div>
+</div>
+</div></div>
+</div>
 
-    <!-- ДЕНЬ 4 -->
-    <div class="ai" id="day4">
-      <div class="ah" onclick="tog(this)">
-        <div class="ah-l"><span class="ai-ico">🌟</span>
-          <div><div class="ai-title">4 мая — Самарканд</div><div class="ai-sub">Регистан · Bibi-Khanym · Siab Bazaar · Gur-e-Amir · Вылет в Ташкент</div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:.6rem">
-          <span class="ai-badge" style="background:rgba(245,200,66,.15);color:var(--gold);border:1px solid rgba(245,200,66,.25)">✨ Самарканд</span>
-          <span class="ai-arr">▼</span>
-        </div>
-      </div>
-      <div class="ab"><div class="ab-in"><div class="tl">
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">07:15 — 09:00</div><div class="tn">🏛 Регистан</div><div class="td">💡 Только утром или вечером — без толпы и жары!</div><div class="tags"><span class="tag">архитектура</span><span class="tag">фото</span></div><a href="https://maps.google.com/?q=Registan+Samarkand" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">09:20</div><div class="tn">🕌 Bibi-Khanym Mosque</div><div class="td">Грандиозная соборная мечеть эпохи Тамерлана</div><a href="https://maps.google.com/?q=Bibi+Khanym+Mosque" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot p"></div></div><div class="tc"><div class="tt">10:00</div><div class="tn">🛒 Siab Bazaar</div><div class="td">Специи, сухофрукты, лепёшки</div><div class="tags"><span class="tag p">базар</span></div><a href="https://maps.google.com/?q=Siab+Bazaar" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">11:30</div><div class="tn">🍽 Обед — Bibikhanum Teahouse</div><a href="https://maps.google.com/?q=Bibikhanum+Teahouse" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">12:30 — 15:30</div><div class="tn">😴 Отдых</div><div class="td">Самое жаркое время — отдых в отеле</div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">16:00</div><div class="tn">⚰️ Gur-e-Amir</div><div class="td">Мавзолей Тамерлана — шедевр тимуридской архитектуры</div><a href="https://maps.google.com/?q=Gur+e+Amir" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot p"></div></div><div class="tc opt"><div class="tt">— опционально —</div><div class="tn">🔭 Ulugh Beg Observatory</div><a href="https://maps.google.com/?q=Ulugh+Beg+Observatory" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">19:30</div><div class="tn">🍽 Ужин</div><div class="tags"><span class="tag r">Platan</span><span class="tag r">Old City</span></div><div class="mls"><a href="https://maps.google.com/?q=Platan+Restaurant+Samarkand" target="_blank" class="ml">📍 Platan →</a><a href="https://maps.google.com/?q=Old+City+Restaurant+Samarkand" target="_blank" class="ml">📍 Old City →</a></div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">22:40 → 23:30</div><div class="tn">✈️ Вылет → Ташкент</div><div class="td">Рейс HY46 · Последняя регистрация 22:10</div></div></div>
-      </div></div></div>
-    </div>
+<!-- ДЕНЬ 4 -->
+<div class="ai" id="day4">
+<div class="ah" onclick="tog(this)">
+<div class="ah-l"><span class="ai-ico">🌟</span>
+<div><div class="ai-title">4 мая — Самарканд</div><div class="ai-sub">Регистан · Bibi-Khanym · Siab Bazaar · Gur-e-Amir · Вылет в Ташкент</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:.6rem">
+<span class="ai-badge" style="background:rgba(245,200,66,.15);color:var(--gold);border:1px solid rgba(245,200,66,.25)">✨ Самарканд</span>
+<span class="ai-arr">▼</span>
+</div>
+</div>
+<div class="ab"><div class="ab-in"><div class="tl">
+<div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">07:15 — 09:00</div><div class="tn">🏛 Регистан</div><div class="td">💡 Только утром или вечером!</div><div class="tags"><span class="tag">8 USD</span></div><a href="https://maps.google.com/?q=Registan+Samarkand" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">09:20</div><div class="tn">🕌 Bibi-Khanym Mosque</div><div class="td">Грандиозная мечеть эпохи Тамерлана</div><div class="tags"><span class="tag t">4 USD</span></div><a href="https://maps.google.com/?q=Bibi+Khanym+Mosque" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot p"></div></div><div class="tc"><div class="tt">10:00</div><div class="tn">🛒 Siab Bazaar</div><div class="td">Специи, сухофрукты, лепёшки</div><a href="https://maps.google.com/?q=Siab+Bazaar" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">11:30</div><div class="tn">🍽 Обед — Bibikhanum Teahouse</div><a href="https://maps.google.com/?q=Bibikhanum+Teahouse" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">12:30 — 15:30</div><div class="tn">😴 Отдых</div><div class="td">Самое жаркое время</div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">16:00</div><div class="tn">⚰️ Gur-e-Amir</div><div class="td">Мавзолей Тамерлана</div><div class="tags"><span class="tag t">6 USD</span></div><a href="https://maps.google.com/?q=Gur+e+Amir" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot p"></div></div><div class="tc opt"><div class="tt">— опционально —</div><div class="tn">🔭 Shah-i-Zinda / Ulugh Beg</div><div class="tags"><span class="tag p">Shah-i-Zinda: 4 USD</span><span class="tag p">Ulugh Beg: 4 USD</span></div><div class="mls"><a href="https://maps.google.com/?q=Shah+i+Zinda+Samarkand" target="_blank" class="ml">📍 Shah-i-Zinda →</a><a href="https://maps.google.com/?q=Ulugh+Beg+Observatory" target="_blank" class="ml">📍 Ulugh Beg →</a></div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot r"></div></div><div class="tc"><div class="tt">19:30</div><div class="tn">🍽 Ужин</div><div class="tags"><span class="tag r">Platan</span><span class="tag r">Old City</span></div><div class="mls"><a href="https://maps.google.com/?q=Platan+Restaurant+Samarkand" target="_blank" class="ml">📍 Platan →</a><a href="https://maps.google.com/?q=Old+City+Restaurant+Samarkand" target="_blank" class="ml">📍 Old City →</a></div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">22:40 → 23:30</div><div class="tn">✈️ Вылет → Ташкент HY46</div><div class="td">Последняя регистрация 22:10</div></div></div>
+</div>
+<div class="day-budget">
+<div class="db-title">💰 Расходы дня</div>
+<div class="db-rows">
+<div class="db-item"><span class="db-label">🏛 Входы (Регистан+Bibi+Gur)</span><span class="db-val">$18</span></div>
+<div class="db-item"><span class="db-label">🏛 Опц. Shah-i-Zinda + Ulugh</span><span class="db-val">+$8</span></div>
+<div class="db-item"><span class="db-label">🍽 Еда</span><span class="db-val">~$60</span></div>
+<div class="db-item"><span class="db-label">✈️ Перелёт SAM→TAS</span><span class="db-val">$65</span></div>
+<div class="db-item"><span class="db-label">🏨 Отель Ташкент</span><span class="db-val">$66</span></div>
+<div class="db-item"><span class="db-label">🚕 Такси</span><span class="db-val">~$10</span></div>
+</div>
+<div class="db-total"><span class="db-total-label">Итого</span><span class="db-total-val">~$219</span></div>
+<div class="db-note">Самый насыщенный день поездки</div>
+</div>
+</div></div>
+</div>
 
-    <!-- НОЧЬ -->
-    <div class="ai">
-      <div class="ah" onclick="tog(this)">
-        <div class="ah-l"><span class="ai-ico">🌙</span>
-          <div><div class="ai-title">Ночь — Ташкент (транзит)</div><div class="ai-sub">Прилёт 23:30 · Такси · Отель · Сон</div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:.6rem">
-          <span class="ai-badge" style="background:rgba(100,80,180,.15);color:#a090f0;border:1px solid rgba(100,80,180,.25)">🏨 Транзит</span>
-          <span class="ai-arr">▼</span>
-        </div>
-      </div>
-      <div class="ab"><div class="ab-in"><div class="tl">
-        <div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">00:10</div><div class="tn">🚕 Такси → Hotel Tashkent</div><a href="https://maps.google.com/?q=Улица+Баходыра+4+Ташкент" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">00:40</div><div class="tn">🛏 Заселение / Сон 😴</div><div class="td">💡 Ничего не планировать ночью — сразу отдых</div></div></div>
-      </div></div></div>
-    </div>
+<!-- НОЧЬ -->
+<div class="ai">
+<div class="ah" onclick="tog(this)">
+<div class="ah-l"><span class="ai-ico">🌙</span>
+<div><div class="ai-title">Ночь — Ташкент (транзит)</div><div class="ai-sub">Прилёт 23:30 · Такси · Отель · Сон</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:.6rem">
+<span class="ai-badge" style="background:rgba(100,80,180,.15);color:#a090f0;border:1px solid rgba(100,80,180,.25)">🏨 Транзит</span>
+<span class="ai-arr">▼</span>
+</div>
+</div>
+<div class="ab"><div class="ab-in"><div class="tl">
+<div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">00:10</div><div class="tn">🚕 Такси → Hotel Tashkent</div><a href="https://maps.google.com/?q=Улица+Баходыра+4+Ташкент" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">00:40</div><div class="tn">🛏 Заселение / Сон 😴</div><div class="td">💡 Ничего не планировать ночью — сразу отдых</div></div></div>
+</div></div></div>
+</div>
 
-    <!-- ДЕНЬ 5 -->
-    <div class="ai" id="day5">
-      <div class="ah" onclick="tog(this)">
-        <div class="ah-l"><span class="ai-ico">☀️</span>
-          <div><div class="ai-title">5 мая — Ташкент (утро)</div><div class="ai-sub">Завтрак · Amir Timur Square · Broadway · Аэропорт → Бишкек</div></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:.6rem">
-          <span class="ai-badge" style="background:rgba(39,174,96,.15);color:var(--green);border:1px solid rgba(39,174,96,.25)">🏠 Домой</span>
-          <span class="ai-arr">▼</span>
-        </div>
-      </div>
-      <div class="ab"><div class="ab-in"><div class="tl">
-        <div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">08:30</div><div class="tn">☕ Завтрак</div><div class="tags"><span class="tag">Breadly</span><span class="tag">Benedict</span><span class="tag">Bon</span></div><div class="mls"><a href="https://maps.google.com/?q=Breadly+Tashkent" target="_blank" class="ml">📍 Breadly →</a><a href="https://maps.google.com/?q=Benedict+Tashkent" target="_blank" class="ml">📍 Benedict →</a><a href="https://maps.google.com/?q=Bon+Tashkent" target="_blank" class="ml">📍 Bon →</a></div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">09:30</div><div class="tn">🏛 Amir Timur Square</div><div class="td">Центральная площадь Ташкента</div><a href="https://maps.google.com/?q=Amir+Timur+Square" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot p"></div></div><div class="tc"><div class="tt">10:00</div><div class="tn">🛍 Broadway Alley</div><div class="td">Сувениры · Атмосфера · Лёгкий финал поездки</div><a href="https://maps.google.com/?q=Broadway+Alley+Tashkent" target="_blank" class="ml">📍 Google Maps →</a></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">10:30 → 11:00</div><div class="tn">🚕 Выезд в аэропорт</div><div class="td">Из центра ~20–25 мин · Не позже 10:30!</div></div></div>
-        <div class="ti"><div class="ti-dot"><div class="dot g"></div></div><div class="tc"><div class="tt">10:55 → 13:15</div><div class="tn">✈️ Вылет → Бишкек 🏠</div><div class="tags"><span class="tag g">Рейс 219 · DHFFAE</span></div></div></div>
-      </div></div></div>
-    </div>
+<!-- ДЕНЬ 5 -->
+<div class="ai" id="day5">
+<div class="ah" onclick="tog(this)">
+<div class="ah-l"><span class="ai-ico">☀️</span>
+<div><div class="ai-title">5 мая — Ташкент (утро)</div><div class="ai-sub">Завтрак · Amir Timur Square · Broadway · Аэропорт → Бишкек</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:.6rem">
+<span class="ai-badge" style="background:rgba(39,174,96,.15);color:var(--green);border:1px solid rgba(39,174,96,.25)">🏠 Домой</span>
+<span class="ai-arr">▼</span>
+</div>
+</div>
+<div class="ab"><div class="ab-in"><div class="tl">
+<div class="ti"><div class="ti-dot"><div class="dot"></div></div><div class="tc"><div class="tt">08:30</div><div class="tn">☕ Завтрак</div><div class="tags"><span class="tag">Breadly</span><span class="tag">Benedict</span><span class="tag">Bon</span></div><div class="mls"><a href="https://maps.google.com/?q=Breadly+Tashkent" target="_blank" class="ml">📍 Breadly →</a><a href="https://maps.google.com/?q=Benedict+Tashkent" target="_blank" class="ml">📍 Benedict →</a></div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot t"></div></div><div class="tc"><div class="tt">09:30</div><div class="tn">🏛 Amir Timur Square</div><a href="https://maps.google.com/?q=Amir+Timur+Square" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot p"></div></div><div class="tc"><div class="tt">10:00</div><div class="tn">🛍 Broadway Alley</div><div class="td">Сувениры · Лёгкий финал поездки</div><a href="https://maps.google.com/?q=Broadway+Alley+Tashkent" target="_blank" class="ml">📍 Google Maps →</a></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot b"></div></div><div class="tc"><div class="tt">10:30 → 11:00</div><div class="tn">🚕 Выезд в аэропорт</div><div class="td">Из центра ~20–25 мин · Не позже 10:30!</div></div></div>
+<div class="ti"><div class="ti-dot"><div class="dot g"></div></div><div class="tc"><div class="tt">10:55 → 13:15</div><div class="tn">✈️ Вылет → Бишкек 🏠</div><div class="tags"><span class="tag g">Рейс 219 · DHFFAE</span></div></div></div>
+</div>
+<div class="day-budget">
+<div class="db-title">💰 Расходы дня</div>
+<div class="db-rows">
+<div class="db-item"><span class="db-label">☕ Завтрак</span><span class="db-val">$60</span></div>
+<div class="db-item"><span class="db-label">✈️ Перелёт TAS→BSZ</span><span class="db-val">$226</span></div>
+<div class="db-item"><span class="db-label">🚕 Такси аэропорт</span><span class="db-val">~$5</span></div>
+</div>
+<div class="db-total"><span class="db-total-label">Итого</span><span class="db-total-val">~$291</span></div>
+<div class="db-note">Лёгкое утро — почти всё на обратный перелёт</div>
+</div>
+</div></div>
+</div>
 
-  </div><!-- /accordion -->
-</div><!-- /wrap -->
+</div>
+</div>
 
-<!-- ══════════════ БЮДЖЕТ ══════════════ -->
+<!-- BUDGET TOTAL -->
 <div class="wrap" id="budget">
-  <div class="sec"><h2>💰 Бюджет в день</h2><p>На одного человека</p></div>
-  <div class="budget-box">
-    <div class="br"><span class="bl">🏛 Входные билеты</span><span class="bv">$10–20</span></div>
-    <div class="br"><span class="bl">🚕 Такси</span><span class="bv">$3–6</span></div>
-    <div class="br"><span class="bl">🍽 Еда</span><span class="bv">$10–25</span></div>
-    <div class="br"><span class="bl">☕ Завтрак (5 мая)</span><span class="bv">$10–20</span></div>
-  </div>
+<div class="sec"><h2>💰 Итоговый бюджет</h2><p>На двух человек · 5 дней</p></div>
+<div class="budget-box">
+<div class="br"><span class="bl">✈️🚄 Транспорт</span><span class="bv">$601</span></div>
+<div class="br"><span class="bl">🏨 Гостиницы</span><span class="bv">$281</span></div>
+<div class="br"><span class="bl">🍽 Еда</span><span class="bv">$440</span></div>
+<div class="br"><span class="bl">🧵 Шоппинг</span><span class="bv">$300</span></div>
+<div class="br" style="background:rgba(245,200,66,.06)"><span class="bl" style="font-weight:700;color:#f0e6cc">💫 TOTAL</span><span class="bv" style="font-size:1.2rem">$1 281</span></div>
+</div>
 
-  <div class="sec" style="padding-top:2rem"><h2>💡 Советы</h2></div>
-  <div class="tips-grid">
-    <div class="tip go"><div class="tip-ico">🌞</div><div class="tip-ttl">Жара</div><div class="tip-txt">12:00–16:00 — отдых в тени или в отеле</div></div>
-    <div class="tip te"><div class="tip-ico">📷</div><div class="tip-ttl">Регистан</div><div class="tip-txt">Только утром или вечером — без толпы и без палящего солнца</div></div>
-    <div class="tip bl"><div class="tip-ico">🚕</div><div class="tip-ttl">Самарканд</div><div class="tip-txt">Город больше Бухары — закладывай время на такси</div></div>
-    <div class="tip re"><div class="tip-ico">🧵</div><div class="tip-ttl">Чапан</div><div class="tip-txt">Не покупай в первой лавке! Сравни цены в нескольких местах</div></div>
-    <div class="tip pu"><div class="tip-ico">🧳</div><div class="tip-ttl">Пешком</div><div class="tip-txt">Бухара идеальна пешком · Самарканд — только такси</div></div>
-  </div>
+<div class="sec" style="padding-top:2rem"><h2>💡 Советы</h2></div>
+<div class="tips-grid">
+<div class="tip go"><div class="tip-ico">🌞</div><div class="tip-ttl">Жара</div><div class="tip-txt">12:00–16:00 — отдых в тени или в отеле</div></div>
+<div class="tip te"><div class="tip-ico">📷</div><div class="tip-ttl">Регистан</div><div class="tip-txt">Только утром или вечером — без толпы и солнца</div></div>
+<div class="tip bl2"><div class="tip-ico">🚕</div><div class="tip-ttl">Самарканд</div><div class="tip-txt">Город больше Бухары — закладывай время на такси</div></div>
+<div class="tip re"><div class="tip-ico">🧵</div><div class="tip-ttl">Чапан</div><div class="tip-txt">Не покупай в первой лавке! Сравни цены</div></div>
+<div class="tip pu"><div class="tip-ico">🧳</div><div class="tip-ttl">Пешком</div><div class="tip-txt">Бухара идеальна пешком · Самарканд — только такси</div></div>
+</div>
 </div>
 
 <footer><p>🇺🇿 Сделано с любовью к путешествиям · <strong>Узбекистан 2026</strong></p></footer>
 
 <script>
 function tog(h){
-  const item=h.parentElement, body=item.querySelector('.ab'), open=item.classList.contains('open');
-  document.querySelectorAll('.ai').forEach(i=>{
+  var item=h.parentElement,body=item.querySelector('.ab'),open=item.classList.contains('open');
+  document.querySelectorAll('.ai').forEach(function(i){
     i.classList.remove('open');
     i.querySelector('.ab').style.maxHeight='0';
   });
-  if(!open){
-    item.classList.add('open');
-    body.style.maxHeight=body.scrollHeight+400+'px';
-  }
+  if(!open){item.classList.add('open');body.style.maxHeight=body.scrollHeight+500+'px';}
 }
 </script>
 </body>
