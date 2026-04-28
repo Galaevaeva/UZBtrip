@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🇺🇿 Узбекистан — Маршрут поездки</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold:    #f5c842;
+      --orange:  #f07e26;
+      --red:     #d94f3d;
+      --teal:    #2ab5a0;
+      --blue:    #2d7dd2;
+      --purple:  #9b59b6;
+      --green:   #27ae60;
+      --dark:    #1a1208;
+      --card-bg: rgba(255,255,255,0.06);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #110e05;
+      color: #f0e6cc;
+      overflow-x: hidden;
+    }
+
+    /* ── TOP BORDER ── */
+    .top-border {
+      height: 4px;
+      background: linear-gradient(90deg, var(--red), var(--orange), var(--gold), var(--teal), var(--blue), var(--purple));
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      background:
+        linear-gradient(180deg, rgba(17,14,5,0) 60%, #110e05 100%),
+        linear-gradient(135deg, #3d1c00 0%, #7b3a00 30%, #1a3a4a 70%, #0a2030 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,200,66,0.18) 0%, transparent 65%);
+      top: -200px; right: -200px;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42,181,160,0.18) 0%, transparent 65%);
+      bottom: -100px; left: -100px;
+    }
+    .hero-pattern {
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(45deg, rgba(245,200,66,0.04) 0, rgba(245,200,66,0.04) 1px, transparent 0, transparent 50%);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+    .flag { font-size: 4rem; margin-bottom: 1rem; position: relative; z-index: 1; }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(90deg, var(--gold), var(--orange), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative; z-index: 1;
+      margin-bottom: 0.6rem;
+    }
+    .hero-sub {
+      font-size: 1.2rem;
+      color: rgba(240,230,204,0.7);
+      position: relative; z-index: 1;
+      margin-bottom: 0.4rem;
+    }
+    .dates-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--orange), var(--red));
+      color: #fff;
+      font-weight: 700;
+      padding: 0.45rem 1.4rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      position: relative; z-index: 1;
+      margin-top: 1.2rem;
+      box-shadow: 0 4px 20px rgba(240,126,38,0.4);
+    }
+    .ornament {
+      display: flex; align-items: center; gap: 0.8rem;
+      justify-content: center;
+      margin: 2rem auto 0;
+      position: relative; z-index: 1;
+    }
+    .ornament span { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold)); }
+    .ornament span:last-child { transform: scaleX(-1); }
+
+    /* ── NAV PILLS ── */
+    .nav-pills {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;
+      padding: 2rem 1.5rem 0;
+      max-width: 860px; margin: 0 auto;
+    }
+    .nav-pill {
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(245,200,66,0.25);
+      color: var(--gold);
+      transition: background 0.2s;
+    }
+    .nav-pill:hover { background: rgba(245,200,66,0.12); }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      text-align: center;
+      padding: 3rem 0 0;
+    }
+    .section-label h2 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--gold), var(--orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-label .day-meta {
+      color: rgba(240,230,204,0.5);
+      font-size: 0.95rem;
+      margin-top: 0.3rem;
+    }
+
+    /* ── DAY DIVIDER ── */
+    .day-divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 2.5rem 0 0;
+    }
+    .day-divider hr { flex: 1; border: none; border-top: 1px dashed rgba(245,200,66,0.2); }
+    .day-divider-badge {
+      background: linear-gradient(90deg, var(--orange), var(--red));
+      color: #fff; font-weight: 700; font-size: 0.85rem;
+      padding: 0.3rem 1rem; border-radius: 50px;
+      white-space: nowrap;
+    }
+    .day-divider-badge.teal  { background: linear-gradient(90deg, var(--teal), var(--blue)); }
+    .day-divider-badge.blue  { background: linear-gradient(90deg, var(--blue), var(--purple)); }
+    .day-divider-badge.green { background: linear-gradient(90deg, var(--green), var(--teal)); }
+    .day-divider-badge.night { background: linear-gradient(90deg, #1a0a3a, #2d1b69); }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding: 2rem 0 1rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 22px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--gold), var(--teal), var(--blue), var(--purple));
+      border-radius: 2px;
+    }
+    .tl-item {
+      display: flex; gap: 1.2rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .tl-dot {
+      flex-shrink: 0; width: 46px;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 0.55rem;
+    }
+    .tl-dot-inner {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      background: #110e05;
+      position: relative; z-index: 1;
+      flex-shrink: 0;
+    }
+    .tl-dot-inner.teal   { border-color: var(--teal); }
+    .tl-dot-inner.blue   { border-color: var(--blue); }
+    .tl-dot-inner.red    { border-color: var(--red); }
+    .tl-dot-inner.purple { border-color: var(--purple); }
+    .tl-dot-inner.green  { border-color: var(--green); }
+
+    .tl-card {
+      flex: 1;
+      background: var(--card-bg);
+      border: 1px solid rgba(245,200,66,0.12);
+      border-radius: 14px;
+      padding: 0.9rem 1.2rem;
+      transition: border-color 0.2s;
+    }
+    .tl-card:hover { border-color: rgba(245,200,66,0.35); }
+    .tl-card.optional { border-style: dashed; opacity: 0.8; }
+
+    .tl-time {
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+    }
+    .tl-title { font-size: 1rem; font-weight: 600; color: #f0e6cc; margin-bottom: 0.3rem; }
+    .tl-desc  { font-size: 0.88rem; color: rgba(240,230,204,0.6); line-height: 1.5; }
+
+    .tl-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.7rem; border-radius: 50px;
+      font-size: 0.78rem; font-weight: 600;
+      background: rgba(245,200,66,0.12); color: var(--gold);
+      border: 1px solid rgba(245,200,66,0.2);
+    }
+    .tag.teal   { background: rgba(42,181,160,0.12);  color: var(--teal);   border-color: rgba(42,181,160,0.2); }
+    .tag.blue   { background: rgba(45,125,210,0.12);  color: var(--blue);   border-color: rgba(45,125,210,0.2); }
+    .tag.red    { background: rgba(217,79,61,0.12);   color: var(--red);    border-color: rgba(217,79,61,0.2);  }
+    .tag.purple { background: rgba(155,89,182,0.12);  color: var(--purple); border-color: rgba(155,89,182,0.2); }
+    .tag.green  { background: rgba(39,174,96,0.12);   color: var(--green);  border-color: rgba(39,174,96,0.2);  }
+
+    .map-link {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.82rem; color: var(--teal);
+      text-decoration: none; margin-top: 0.5rem;
+      border-bottom: 1px dashed rgba(42,181,160,0.4);
+      transition: color 0.2s;
+    }
+    .map-link:hover { color: #fff; }
+    .map-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
+
+    /* ── TIPS ── */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem; margin-top: 1.5rem;
+    }
+    .tip-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(245,200,66,0.12);
+      border-radius: 16px; padding: 1.2rem;
+      position: relative; overflow: hidden;
+    }
+    .tip-card::before {
+      content: ''; position: absolute; inset: 0;
+      opacity: 0.06; border-radius: 16px;
+    }
+    .tip-card.gold::before   { background: var(--gold); }
+    .tip-card.teal::before   { background: var(--teal); }
+    .tip-card.red::before    { background: var(--red);  }
+    .tip-card.blue::before   { background: var(--blue); }
+    .tip-card.purple::before { background: var(--purple); }
+    .tip-icon  { font-size: 2rem; margin-bottom: 0.6rem; }
+    .tip-title { font-weight: 700; font-size: 0.95rem; color: var(--gold); margin-bottom: 0.4rem; }
+    .tip-text  { font-size: 0.88rem; color: rgba(240,230,204,0.7); line-height: 1.5; }
+
+    /* ── BUDGET ── */
+    .budget-box {
+      background: var(--card-bg);
+      border: 1px solid rgba(245,200,66,0.12);
+      border-radius: 14px; overflow: hidden; margin-top: 1.5rem;
+    }
+    .budget-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid rgba(245,200,66,0.08);
+      font-size: 0.95rem;
+    }
+    .budget-row:last-child { border-bottom: none; }
+    .budget-label { color: rgba(240,230,204,0.75); }
+    .budget-val   { font-weight: 700; color: var(--gold); }
+
+    /* ── PHOTO STRIP ── */
+    .photo-strip {
+      display: flex; gap: 0.8rem;
+      overflow-x: auto; padding: 1.5rem 0;
+      scrollbar-width: none;
+    }
+    .photo-strip::-webkit-scrollbar { display: none; }
+    .photo-slot {
+      flex-shrink: 0; width: 200px; height: 140px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      border: 2px dashed rgba(245,200,66,0.25);
+      background: var(--card-bg);
+      flex-direction: column; gap: 0.3rem;
+    }
+    .photo-slot span { font-size: 0.72rem; color: rgba(240,230,204,0.4); }
+
+    /* ── ROUTE BAR ── */
+    .route-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem; flex-wrap: wrap;
+      padding: 2rem 1.5rem 0;
+      max-width: 860px; margin: 0 auto;
+    }
+    .route-city {
+      font-weight: 700; font-size: 0.95rem;
+      color: var(--gold);
+    }
+    .route-arrow { color: rgba(245,200,66,0.4); font-size: 1.1rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      color: rgba(240,230,204,0.3); font-size: 0.88rem;
+    }
+    footer strong { color: var(--gold); }
+
+    /* ── TICKETS ── */
+    .tickets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+    .ticket {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+    .ticket-train {
+      background: linear-gradient(135deg, #0d2a5e 0%, #1a4a9e 100%);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .ticket-flight {
+      background: linear-gradient(135deg, #1a3a1a 0%, #2a6a2a 100%);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .ticket-flight-uz {
+      background: linear-gradient(135deg, #1c1060 0%, #3b2abf 100%);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .ticket-header {
+      padding: 0.8rem 1.1rem;
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px dashed rgba(255,255,255,0.2);
+    }
+    .ticket-type {
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      opacity: 0.8;
+    }
+    .ticket-num {
+      font-size: 0.7rem; opacity: 0.6;
+    }
+    .ticket-body {
+      padding: 1rem 1.1rem;
+    }
+    .ticket-route {
+      display: flex; align-items: center; gap: 0.7rem;
+      margin-bottom: 0.9rem;
+    }
+    .ticket-city {
+      flex: 1;
+    }
+    .ticket-city-name {
+      font-size: 1.1rem; font-weight: 800; color: #fff;
+      line-height: 1.1;
+    }
+    .ticket-city-time {
+      font-size: 1.5rem; font-weight: 900; color: var(--gold);
+      line-height: 1.1;
+    }
+    .ticket-city-date {
+      font-size: 0.72rem; opacity: 0.6; margin-top: 0.1rem;
+    }
+    .ticket-arrow-block {
+      text-align: center; flex-shrink: 0;
+    }
+    .ticket-duration {
+      font-size: 0.7rem; opacity: 0.6; margin-bottom: 0.1rem;
+    }
+    .ticket-arrow {
+      font-size: 1.2rem; color: rgba(255,255,255,0.4);
+    }
+    .ticket-meta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      font-size: 0.78rem;
+    }
+    .ticket-meta-item {}
+    .ticket-meta-label { opacity: 0.5; display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .ticket-meta-val   { color: #fff; font-weight: 600; }
+    .ticket-footer {
+      padding: 0.6rem 1.1rem;
+      background: rgba(0,0,0,0.2);
+      font-size: 0.75rem; opacity: 0.7;
+      display: flex; justify-content: space-between;
+      border-top: 1px dashed rgba(255,255,255,0.1);
+    }
+    .ticket-notch-row {
+      display: flex; align-items: center; gap: 0;
+      margin: 0 -0px;
+    }
+    .ticket-notch-line {
+      flex: 1; border-top: 1px dashed rgba(255,255,255,0.25);
+    }
+    .ticket-notch {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #110e05; flex-shrink: 0;
+    }
+
+    /* ── SPACING ── */
+    .pb2 { padding-bottom: 2rem; }
+    .pt1 { padding-top: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<div class="top-border"></div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="flag">🇺🇿</div>
+  <h1>Узбекистан</h1>
+  <p class="hero-sub">Ташкент · Бухара · Самарканд</p>
+  <div class="dates-badge">✈️ 1–5 мая 2026</div>
+  <div class="ornament">
+    <span></span><span style="color:var(--gold)">❖</span><span></span>
+  </div>
+</section>
+
+<!-- ═══ МАРШРУТ ═══ -->
+<div class="route-bar">
+  <span class="route-city">🛬 Ташкент</span>
+  <span class="route-arrow">→</span>
+  <span class="route-city">🚄 Бухара</span>
+  <span class="route-arrow">→</span>
+  <span class="route-city">🚄 Самарканд</span>
+  <span class="route-arrow">→</span>
+  <span class="route-city">✈️ Ташкент</span>
+  <span class="route-arrow">→</span>
+  <span class="route-city">🛫 Бишкек</span>
+</div>
+
+<!-- ═══ НАВИГАЦИЯ ═══ -->
+<div class="nav-pills">
+  <a href="#tickets" class="nav-pill">🎫 Билеты</a>
+  <a href="#day1" class="nav-pill">📍 1 мая — Ташкент</a>
+  <a href="#day2" class="nav-pill">🚄 2 мая — Бухара</a>
+  <a href="#day3" class="nav-pill">📍 3 мая — Бухара→Самарканд</a>
+  <a href="#day4" class="nav-pill">🏛 4 мая — Самарканд</a>
+  <a href="#day5" class="nav-pill">☀️ 5 мая — Ташкент</a>
+</div>
+
+<!-- ═══════════════════════════════
+     БИЛЕТЫ
+═══════════════════════════════ -->
+<div class="container" id="tickets">
+  <div class="section-label">
+    <h2>🎫 Наши билеты</h2>
+    <p class="day-meta">Aijamal Galaeva · Ruslan Kovalenko · Бронь DHFFAE / ZOLQU4</p>
+  </div>
+  <div class="tickets-grid">
+
+    <!-- ── Бишкек → Ташкент ── -->
+    <div class="ticket ticket-flight">
+      <div class="ticket-header">
+        <span class="ticket-type">✈️ Авиабилет · Центрум Эйр C6</span>
+        <span class="ticket-num">Рейс 220</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-route">
+          <div class="ticket-city">
+            <div class="ticket-city-time">14:20</div>
+            <div class="ticket-city-name">Бишкек</div>
+            <div class="ticket-city-date">01 мая 2026 · BSZ Манас</div>
+          </div>
+          <div class="ticket-arrow-block">
+            <div class="ticket-duration">0ч 40м</div>
+            <div class="ticket-arrow">→</div>
+          </div>
+          <div class="ticket-city" style="text-align:right">
+            <div class="ticket-city-time">15:00</div>
+            <div class="ticket-city-name">Ташкент</div>
+            <div class="ticket-city-date">01 мая 2026 · TAS</div>
+          </div>
+        </div>
+        <div class="ticket-notch-row"><div class="ticket-notch"></div><div class="ticket-notch-line"></div><div class="ticket-notch"></div></div>
+        <div class="ticket-meta" style="margin-top:0.8rem">
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Багаж</span><span class="ticket-meta-val">23 кг + 8 кг ручная</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Самолёт</span><span class="ticket-meta-val">Airbus A320</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Бронь</span><span class="ticket-meta-val">DHFFAE</span></div>
+        </div>
+      </div>
+      <div class="ticket-footer">
+        <span>Онлайн-регистрация за 24 ч до вылета</span>
+        <span>✅ Подтверждён</span>
+      </div>
+    </div>
+
+    <!-- ── Ташкент → Бухара (поезд) ── -->
+    <div class="ticket ticket-train">
+      <div class="ticket-header">
+        <span class="ticket-type">🚄 Поезд · O'zbekiston Temir Yo'llari</span>
+        <span class="ticket-num">712ФА СКОРОСТ</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-route">
+          <div class="ticket-city">
+            <div class="ticket-city-time">20:32</div>
+            <div class="ticket-city-name">Ташкент</div>
+            <div class="ticket-city-date">01 мая 2026 · Пасс. центр.</div>
+          </div>
+          <div class="ticket-arrow-block">
+            <div class="ticket-duration">5ч 57м</div>
+            <div class="ticket-arrow">→</div>
+          </div>
+          <div class="ticket-city" style="text-align:right">
+            <div class="ticket-city-time">02:29</div>
+            <div class="ticket-city-name">Бухара</div>
+            <div class="ticket-city-date">02 мая 2026 · Бухара 1</div>
+          </div>
+        </div>
+        <div class="ticket-notch-row"><div class="ticket-notch"></div><div class="ticket-notch-line"></div><div class="ticket-notch"></div></div>
+        <div class="ticket-meta" style="margin-top:0.8rem">
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Вагон</span><span class="ticket-meta-val">06</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Места</span><span class="ticket-meta-val">017 · 018</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Класс</span><span class="ticket-meta-val">СИД (2В)</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Цена</span><span class="ticket-meta-val">276 820 сум × 2</span></div>
+        </div>
+      </div>
+      <div class="ticket-footer">
+        <span>Регистрация закрывается за 30 мин до отправления</span>
+        <span>✅ Оплачен</span>
+      </div>
+    </div>
+
+    <!-- ── Бухара → Самарканд (поезд) ── -->
+    <div class="ticket ticket-train">
+      <div class="ticket-header">
+        <span class="ticket-type">🚄 Поезд · O'zbekiston Temir Yo'llari</span>
+        <span class="ticket-num">777ФА СКОРОСТ</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-route">
+          <div class="ticket-city">
+            <div class="ticket-city-time">18:08</div>
+            <div class="ticket-city-name">Бухара</div>
+            <div class="ticket-city-date">03 мая 2026 · Бухара 1</div>
+          </div>
+          <div class="ticket-arrow-block">
+            <div class="ticket-duration">1ч 43м</div>
+            <div class="ticket-arrow">→</div>
+          </div>
+          <div class="ticket-city" style="text-align:right">
+            <div class="ticket-city-time">19:51</div>
+            <div class="ticket-city-name">Самарканд</div>
+            <div class="ticket-city-date">03 мая 2026</div>
+          </div>
+        </div>
+        <div class="ticket-notch-row"><div class="ticket-notch"></div><div class="ticket-notch-line"></div><div class="ticket-notch"></div></div>
+        <div class="ticket-meta" style="margin-top:0.8rem">
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Вагон</span><span class="ticket-meta-val">04</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Места</span><span class="ticket-meta-val">017 · 018</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Класс</span><span class="ticket-meta-val">СИД (2Е)</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Цена</span><span class="ticket-meta-val">225 000 сум × 2</span></div>
+        </div>
+      </div>
+      <div class="ticket-footer">
+        <span>Регистрация закрывается за 30 мин до отправления</span>
+        <span>✅ Оплачен</span>
+      </div>
+    </div>
+
+    <!-- ── Самарканд → Ташкент (самолёт) ── -->
+    <div class="ticket ticket-flight-uz">
+      <div class="ticket-header">
+        <span class="ticket-type">✈️ Авиабилет · Uzbekistan Airways</span>
+        <span class="ticket-num">Рейс HY46</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-route">
+          <div class="ticket-city">
+            <div class="ticket-city-time">22:40</div>
+            <div class="ticket-city-name">Самарканд</div>
+            <div class="ticket-city-date">04 мая 2026 · SKD</div>
+          </div>
+          <div class="ticket-arrow-block">
+            <div class="ticket-duration">0ч 50м</div>
+            <div class="ticket-arrow">→</div>
+          </div>
+          <div class="ticket-city" style="text-align:right">
+            <div class="ticket-city-time">23:30</div>
+            <div class="ticket-city-name">Ташкент</div>
+            <div class="ticket-city-date">04 мая 2026 · TAS T3</div>
+          </div>
+        </div>
+        <div class="ticket-notch-row"><div class="ticket-notch"></div><div class="ticket-notch-line"></div><div class="ticket-notch"></div></div>
+        <div class="ticket-meta" style="margin-top:0.8rem">
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Бронь</span><span class="ticket-meta-val">ZOLQU4</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Терминал</span><span class="ticket-meta-val">Terminal 3</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Регистрация до</span><span class="ticket-meta-val">22:10</span></div>
+        </div>
+      </div>
+      <div class="ticket-footer">
+        <span>№ 250-2117420462 / 250-2117420463</span>
+        <span>✅ Подтверждён</span>
+      </div>
+    </div>
+
+    <!-- ── Ташкент → Бишкек ── -->
+    <div class="ticket ticket-flight">
+      <div class="ticket-header">
+        <span class="ticket-type">✈️ Авиабилет · Центрум Эйр C6</span>
+        <span class="ticket-num">Рейс 219</span>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-route">
+          <div class="ticket-city">
+            <div class="ticket-city-time">10:55</div>
+            <div class="ticket-city-name">Ташкент</div>
+            <div class="ticket-city-date">05 мая 2026 · TAS</div>
+          </div>
+          <div class="ticket-arrow-block">
+            <div class="ticket-duration">2ч 20м</div>
+            <div class="ticket-arrow">→</div>
+          </div>
+          <div class="ticket-city" style="text-align:right">
+            <div class="ticket-city-time">13:15</div>
+            <div class="ticket-city-name">Бишкек</div>
+            <div class="ticket-city-date">05 мая 2026 · BSZ Манас</div>
+          </div>
+        </div>
+        <div class="ticket-notch-row"><div class="ticket-notch"></div><div class="ticket-notch-line"></div><div class="ticket-notch"></div></div>
+        <div class="ticket-meta" style="margin-top:0.8rem">
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Багаж</span><span class="ticket-meta-val">23 кг + 8 кг ручная</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Самолёт</span><span class="ticket-meta-val">Airbus A20N</span></div>
+          <div class="ticket-meta-item"><span class="ticket-meta-label">Бронь</span><span class="ticket-meta-val">DHFFAE</span></div>
+        </div>
+      </div>
+      <div class="ticket-footer">
+        <span>Выезд в аэропорт не позже 10:30!</span>
+        <span>✅ Подтверждён</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ ФОТО ═══ -->
+<div class="container">
+  <div class="section-label">
+    <h2>📸 Фотографии</h2>
+    <p class="day-meta">Добавь свои фото — замени блоки на &lt;img src="..."&gt;</p>
+  </div>
+  <div class="photo-strip">
+    <div class="photo-slot">🕌<span>Ташкент</span></div>
+    <div class="photo-slot">🌅<span>Po-i-Kalyan</span></div>
+    <div class="photo-slot">🧵<span>Шоппинг</span></div>
+    <div class="photo-slot">🏛<span>Регистан</span></div>
+    <div class="photo-slot">🫖<span>Чайхана</span></div>
+    <div class="photo-slot">✨<span>Самарканд</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     ДЕНЬ 1 — ТАШКЕНТ
+═══════════════════════════════ -->
+<div class="container" id="day1">
+  <div class="section-label">
+    <h2>📍 1 мая — Ташкент</h2>
+    <p class="day-meta">Прилёт · Прогулка · Поезд на Бухару</p>
+  </div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">15:00 — 15:45</div>
+        <div class="tl-title">✈️ Прилёт</div>
+        <div class="tl-desc">Выход из аэропорта ~15:45</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner teal"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">16:10 — 17:20</div>
+        <div class="tl-title">🌳 Tashkent City</div>
+        <div class="tl-desc">Прогулка с чемоданами — парк, озеро, фото</div>
+        <div class="tl-tags">
+          <span class="tag">парк</span>
+          <span class="tag teal">озеро</span>
+          <span class="tag">фото</span>
+        </div>
+        <a href="https://maps.google.com/?q=Tashkent+City+Park" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner red"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">17:30</div>
+        <div class="tl-title">🍽 Ужин</div>
+        <div class="tl-desc">На выбор:</div>
+        <div class="tl-tags">
+          <span class="tag red">Afsona</span>
+          <span class="tag red">Caravan</span>
+        </div>
+        <div class="map-links">
+          <a href="https://maps.google.com/?q=Afsona+Tashkent" target="_blank" class="map-link">📍 Afsona →</a>
+          <a href="https://maps.google.com/?q=Caravan+Tashkent" target="_blank" class="map-link">📍 Caravan →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner blue"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">18:40 → 19:48</div>
+        <div class="tl-title">🚄 Поезд → Бухара</div>
+        <div class="tl-desc">Выезд на вокзал 18:40 · Прибытие на вокзал 19:00 · Отправление 19:48</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     ДЕНЬ 2 — БУХАРА
+═══════════════════════════════ -->
+<div class="container" id="day2">
+  <div class="day-divider">
+    <hr/><span class="day-divider-badge teal">🚄 2 мая — Бухара</span><hr/>
+  </div>
+  <div class="section-label pt1">
+    <p class="day-meta">Прибытие ночью · Архитектура · Шоппинг · Вечерний Po-i-Kalyan</p>
+  </div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner blue"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">02:23</div>
+        <div class="tl-title">🛏 Прибытие → сон</div>
+        <div class="tl-desc">Ночное прибытие, заселение и отдых 😴</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">08:30</div>
+        <div class="tl-title">🕌 Po-i-Kalyan</div>
+        <div class="tl-desc">Архитектурный ансамбль — лучшие фото утром!</div>
+        <div class="tl-tags"><span class="tag">архитектура</span><span class="tag">фото</span></div>
+        <a href="https://maps.google.com/?q=Poi+Kalyan+Bukhara" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner teal"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">10:00</div>
+        <div class="tl-title">🏰 Ark of Bukhara</div>
+        <div class="tl-desc">Бухарская крепость — цитадель правителей</div>
+        <div class="tl-tags"><span class="tag teal">история</span></div>
+        <a href="https://maps.google.com/?q=Ark+Bukhara" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner purple"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">11:00 — 13:00</div>
+        <div class="tl-title">🧵 Шоппинг чапана</div>
+        <div class="tl-desc">Рынок Toqi Telpak Furushon и площадь Lyabi-Hauz<br>💡 Не покупать в первой лавке!</div>
+        <div class="tl-tags"><span class="tag purple">шоппинг</span><span class="tag purple">чапан</span></div>
+        <div class="map-links">
+          <a href="https://maps.google.com/?q=Toqi+Telpak+Furushon" target="_blank" class="map-link">📍 Toqi →</a>
+          <a href="https://maps.google.com/?q=Lyabi+Hauz" target="_blank" class="map-link">📍 Lyabi-Hauz →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">13:00 — 16:30</div>
+        <div class="tl-title">🍲 Обед / Отдых → Прогулка</div>
+        <div class="tl-desc">Обед и отдых · 16:30 — прогулка Lyabi-Hauz</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner red"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">19:00</div>
+        <div class="tl-title">🍽 Ужин — Ayvan</div>
+        <div class="tl-desc">Ресторан с видом на Lyabi-Hauz — бронь обязательна!</div>
+        <div class="tl-tags"><span class="tag red">бронь</span></div>
+        <a href="https://maps.google.com/?q=Ayvan+Bukhara" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">21:00</div>
+        <div class="tl-title">🌙 Вечерний Po-i-Kalyan</div>
+        <div class="tl-desc">Ансамбль в ночной подсветке — очень красиво!</div>
+        <div class="tl-tags"><span class="tag">вечерние фото</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     ДЕНЬ 3 — БУХАРА → САМАРКАНД
+═══════════════════════════════ -->
+<div class="container" id="day3">
+  <div class="day-divider">
+    <hr/><span class="day-divider-badge blue">📍 3 мая — Бухара → Самарканд</span><hr/>
+  </div>
+  <div class="section-label pt1">
+    <p class="day-meta">Мавзолеи · Чайхана · Поезд · Заселение в Самарканде</p>
+  </div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">07:00</div>
+        <div class="tl-title">🕌 Ismail Samani Mausoleum</div>
+        <div class="tl-desc">Один из древнейших памятников Средней Азии (IX–X вв.)</div>
+        <div class="tl-tags"><span class="tag">история</span><span class="tag">фото</span></div>
+        <a href="https://maps.google.com/?q=Ismail+Samani+Mausoleum" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner teal"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">08:00</div>
+        <div class="tl-title">🏛 Chor Minor</div>
+        <div class="tl-desc">Уникальная мечеть с четырьмя минаретами</div>
+        <div class="tl-tags"><span class="tag teal">архитектура</span></div>
+        <a href="https://maps.google.com/?q=Chor+Minor" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">10:00</div>
+        <div class="tl-title">☕ Silk Road Tea House</div>
+        <div class="tl-desc">Чай в атмосферной чайхане на Великом шёлковом пути</div>
+        <div class="tl-tags"><span class="tag">кафе</span><span class="tag">чай</span></div>
+        <a href="https://maps.google.com/?q=Silk+Road+Tea+House+Bukhara" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner red"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">12:00 — 16:00</div>
+        <div class="tl-title">🍲 Обед · Свободное время</div>
+        <div class="tl-desc">Покупки, отдых, прогулка по городу</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner blue"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">18:08 → 19:51</div>
+        <div class="tl-title">🚄 Поезд → Самарканд</div>
+        <div class="tl-desc">Прибытие в Самарканд 19:51</div>
+        <div class="tl-tags"><span class="tag blue">Самарканд</span></div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner green"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">20:15</div>
+        <div class="tl-title">🏨 Заселение — H Boykaro 37</div>
+        <div class="tl-desc">Отель в центре Самарканда</div>
+        <a href="https://maps.google.com/?q=H+Boykaro+37+Samarkand" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner red"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">21:00</div>
+        <div class="tl-title">🍽 Лёгкий ужин</div>
+        <div class="tl-desc">Рядом с отелем — без сложных маршрутов</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     ДЕНЬ 4 — САМАРКАНД
+═══════════════════════════════ -->
+<div class="container" id="day4">
+  <div class="day-divider">
+    <hr/><span class="day-divider-badge" style="background:linear-gradient(90deg,#8b4513,#d4a017)">🏛 4 мая — Самарканд</span><hr/>
+  </div>
+  <div class="section-label pt1">
+    <p class="day-meta">Регистан · Базар · Мавзолеи · Вылет в Ташкент</p>
+  </div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">07:15 — 09:00</div>
+        <div class="tl-title">🏛 Регистан</div>
+        <div class="tl-desc">Главная площадь Самарканда — три медресе.<br>💡 Только утром или вечером — без толпы и жары!</div>
+        <div class="tl-tags"><span class="tag">архитектура</span><span class="tag">фото</span></div>
+        <a href="https://maps.google.com/?q=Registan+Samarkand" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner teal"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">09:20</div>
+        <div class="tl-title">🕌 Bibi-Khanym Mosque</div>
+        <div class="tl-desc">Грандиозная соборная мечеть эпохи Тамерлана</div>
+        <div class="tl-tags"><span class="tag teal">история</span></div>
+        <a href="https://maps.google.com/?q=Bibi+Khanym+Mosque" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner purple"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">10:00</div>
+        <div class="tl-title">🛒 Siab Bazaar</div>
+        <div class="tl-desc">Главный рынок Самарканда — специи, сухофрукты, лепёшки</div>
+        <div class="tl-tags"><span class="tag purple">базар</span><span class="tag purple">сувениры</span></div>
+        <a href="https://maps.google.com/?q=Siab+Bazaar" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner red"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">11:30</div>
+        <div class="tl-title">🍽 Обед — Bibikhanum Teahouse</div>
+        <div class="tl-desc">Атмосферная чайхана у мечети</div>
+        <a href="https://maps.google.com/?q=Bibikhanum+Teahouse" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">12:30 — 15:30</div>
+        <div class="tl-title">😴 Отдых</div>
+        <div class="tl-desc">Самое жаркое время — отдых в отеле</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner teal"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">16:00</div>
+        <div class="tl-title">⚰️ Gur-e-Amir</div>
+        <div class="tl-desc">Мавзолей Тамерлана и его потомков — шедевр тимуридской архитектуры</div>
+        <div class="tl-tags"><span class="tag teal">история</span><span class="tag">фото</span></div>
+        <a href="https://maps.google.com/?q=Gur+e+Amir" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner purple"></div></div>
+      <div class="tl-card optional">
+        <div class="tl-time">— опционально —</div>
+        <div class="tl-title">🔭 Ulugh Beg Observatory</div>
+        <div class="tl-desc">Обсерватория XV века — если останется время и силы</div>
+        <div class="tl-tags"><span class="tag purple">опционально</span></div>
+        <a href="https://maps.google.com/?q=Ulugh+Beg+Observatory" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">18:30</div>
+        <div class="tl-title">🚶 Вечерняя прогулка</div>
+        <div class="tl-desc">Прогулка по вечернему городу</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner red"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">19:30</div>
+        <div class="tl-title">🍽 Ужин</div>
+        <div class="tl-desc">На выбор:</div>
+        <div class="tl-tags">
+          <span class="tag red">Platan</span>
+          <span class="tag red">Old City</span>
+        </div>
+        <div class="map-links">
+          <a href="https://maps.google.com/?q=Platan+Restaurant+Samarkand" target="_blank" class="map-link">📍 Platan →</a>
+          <a href="https://maps.google.com/?q=Old+City+Restaurant+Samarkand" target="_blank" class="map-link">📍 Old City →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner blue"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">22:40 → 23:30</div>
+        <div class="tl-title">✈️ Вылет → Ташкент</div>
+        <div class="tl-desc">Вылет из Самарканда 22:40 · Прилёт в Ташкент 23:30 · Рейс HY46</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     НОЧЬ — ТАШКЕНТ (транзит)
+═══════════════════════════════ -->
+<div class="container">
+  <div class="day-divider">
+    <hr/><span class="day-divider-badge night">🌙 Ночь — Ташкент (транзит)</span><hr/>
+  </div>
+  <div class="timeline" style="padding-top:1.5rem;">
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner blue"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">00:10</div>
+        <div class="tl-title">🚕 Такси → отель</div>
+        <div class="tl-desc">Hotel Tashkent</div>
+        <a href="https://maps.google.com/?q=Улица+Баходыра+4+Ташкент" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">00:40</div>
+        <div class="tl-title">🛏 Заселение / Сон 😴</div>
+        <div class="tl-desc">💡 ВАЖНО: ничего не планировать ночью — сразу отдых</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     ДЕНЬ 5 — ТАШКЕНТ УТРО
+═══════════════════════════════ -->
+<div class="container" id="day5">
+  <div class="day-divider">
+    <hr/><span class="day-divider-badge green">☀️ 5 мая — Ташкент (утро)</span><hr/>
+  </div>
+  <div class="section-label pt1">
+    <p class="day-meta">Завтрак · Прогулка · Аэропорт → Бишкек</p>
+  </div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">08:30</div>
+        <div class="tl-title">☕ Завтрак</div>
+        <div class="tl-desc">На выбор:</div>
+        <div class="tl-tags">
+          <span class="tag">Breadly</span>
+          <span class="tag">Benedict</span>
+          <span class="tag">Bon</span>
+        </div>
+        <div class="map-links">
+          <a href="https://maps.google.com/?q=Breadly+Tashkent" target="_blank" class="map-link">📍 Breadly →</a>
+          <a href="https://maps.google.com/?q=Benedict+Tashkent" target="_blank" class="map-link">📍 Benedict →</a>
+          <a href="https://maps.google.com/?q=Bon+Tashkent" target="_blank" class="map-link">📍 Bon →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner teal"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">09:30</div>
+        <div class="tl-title">🏛 Amir Timur Square</div>
+        <div class="tl-desc">Красивая центральная площадь Ташкента — прогулка</div>
+        <a href="https://maps.google.com/?q=Amir+Timur+Square" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner purple"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">10:00</div>
+        <div class="tl-title">🛍 Broadway Alley</div>
+        <div class="tl-desc">Прогулка · Сувениры · Атмосфера<br>💡 Быстрый и лёгкий финал поездки — не планировать сложных локаций</div>
+        <div class="tl-tags"><span class="tag purple">сувениры</span></div>
+        <a href="https://maps.google.com/?q=Broadway+Alley+Tashkent" target="_blank" class="map-link">📍 Google Maps →</a>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner blue"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">10:30 → 11:00</div>
+        <div class="tl-title">🚕 Выезд в аэропорт</div>
+        <div class="tl-desc">Из центра ~20–25 мин · Лучше выехать не позже 10:30</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><div class="tl-dot-inner green"></div></div>
+      <div class="tl-card">
+        <div class="tl-time">10:55 → 13:15</div>
+        <div class="tl-title">✈️ Вылет → Бишкек 🏠</div>
+        <div class="tl-desc">Вылет 10:55 · Прилёт в Бишкек 13:15</div>
+        <div class="tl-tags"><span class="tag green">домой</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     БЮДЖЕТ
+═══════════════════════════════ -->
+<div class="container pb2">
+  <div class="section-label">
+    <h2>💰 Примерный бюджет</h2>
+    <p class="day-meta">На одного человека в день</p>
+  </div>
+  <div class="budget-box">
+    <div class="budget-row"><span class="budget-label">🏛 Входные билеты</span><span class="budget-val">$10–20</span></div>
+    <div class="budget-row"><span class="budget-label">🚕 Такси</span><span class="budget-val">$3–6</span></div>
+    <div class="budget-row"><span class="budget-label">🍽 Еда</span><span class="budget-val">$10–25</span></div>
+    <div class="budget-row"><span class="budget-label">☕ Завтрак (5 мая)</span><span class="budget-val">$10–20</span></div>
+  </div>
+
+  <!-- СОВЕТЫ -->
+  <div class="section-label" style="padding-top:2rem;">
+    <h2>💡 Советы</h2>
+  </div>
+  <div class="tips-grid" style="margin-top:1.5rem; padding-bottom:2rem;">
+    <div class="tip-card gold">
+      <div class="tip-icon">🌞</div>
+      <div class="tip-title">Жара</div>
+      <div class="tip-text">12:00–16:00 — отдых в тени или в отеле</div>
+    </div>
+    <div class="tip-card teal">
+      <div class="tip-icon">📷</div>
+      <div class="tip-title">Регистан</div>
+      <div class="tip-text">Только утром или вечером — без толпы и без палящего солнца</div>
+    </div>
+    <div class="tip-card blue">
+      <div class="tip-icon">🚕</div>
+      <div class="tip-title">Самарканд</div>
+      <div class="tip-text">Город больше Бухары — закладывай время на такси</div>
+    </div>
+    <div class="tip-card red">
+      <div class="tip-icon">🧵</div>
+      <div class="tip-title">Чапан</div>
+      <div class="tip-text">Не покупай в первой лавке! Сравни цены в нескольких местах</div>
+    </div>
+    <div class="tip-card purple">
+      <div class="tip-icon">🧳</div>
+      <div class="tip-title">Бухара vs Самарканд</div>
+      <div class="tip-text">Бухара лучше для пешеходных прогулок · Самарканд — такси</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>🇺🇿 Сделано с любовью к путешествиям · <strong>Узбекистан 2026</strong></p>
+</footer>
+
+</body>
+</html>
