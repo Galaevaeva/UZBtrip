@@ -290,23 +290,51 @@
     .budget-label { color: rgba(240,230,204,0.75); }
     .budget-val   { font-weight: 700; color: var(--gold); }
 
-    /* ── PHOTO STRIP ── */
-    .photo-strip {
-      display: flex; gap: 0.8rem;
-      overflow-x: auto; padding: 1.5rem 0;
-      scrollbar-width: none;
+    /* ── PHOTO GRID ── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
     }
-    .photo-strip::-webkit-scrollbar { display: none; }
-    .photo-slot {
-      flex-shrink: 0; width: 200px; height: 140px;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem;
-      border: 2px dashed rgba(245,200,66,0.25);
+    .photo-card {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/3;
+      cursor: pointer;
       background: var(--card-bg);
-      flex-direction: column; gap: 0.3rem;
     }
-    .photo-slot span { font-size: 0.72rem; color: rgba(240,230,204,0.4); }
+    .photo-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .photo-card:hover img { transform: scale(1.06); }
+    .photo-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+      display: flex; align-items: flex-end;
+      padding: 0.9rem;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .photo-card:hover .photo-card-overlay { opacity: 1; }
+    .photo-card-label {
+      font-size: 0.85rem; font-weight: 700;
+      color: #fff;
+    }
+    .photo-card-city {
+      font-size: 0.7rem; color: var(--gold);
+      margin-top: 0.1rem;
+    }
+    .photo-fallback {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.4rem; font-size: 2.2rem;
+    }
+    .photo-fallback span { font-size: 0.75rem; color: rgba(240,230,204,0.5); }
 
     /* ── ROUTE BAR ── */
     .route-bar {
@@ -420,6 +448,76 @@
     .ticket-notch {
       width: 16px; height: 16px; border-radius: 50%;
       background: #110e05; flex-shrink: 0;
+    }
+
+    /* ── ACCORDION ── */
+    .accordion {
+      margin-top: 2rem;
+    }
+    .acc-item {
+      border: 1px solid rgba(245,200,66,0.15);
+      border-radius: 18px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .acc-item.open {
+      border-color: rgba(245,200,66,0.4);
+    }
+    .acc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.4rem;
+      cursor: pointer;
+      user-select: none;
+      gap: 1rem;
+      background: rgba(255,255,255,0.04);
+      transition: background 0.2s;
+    }
+    .acc-header:hover {
+      background: rgba(245,200,66,0.06);
+    }
+    .acc-header-left {
+      display: flex; align-items: center; gap: 0.9rem;
+    }
+    .acc-icon {
+      font-size: 1.5rem; flex-shrink: 0;
+    }
+    .acc-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #f0e6cc;
+    }
+    .acc-sub {
+      font-size: 0.78rem;
+      color: rgba(240,230,204,0.45);
+      margin-top: 0.15rem;
+    }
+    .acc-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.25rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .acc-arrow {
+      font-size: 0.85rem;
+      color: var(--gold);
+      transition: transform 0.35s ease;
+      flex-shrink: 0;
+    }
+    .acc-item.open .acc-arrow {
+      transform: rotate(180deg);
+    }
+    .acc-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .acc-body-inner {
+      padding: 0 1rem 1rem;
     }
 
     /* ── SPACING ── */
@@ -664,28 +762,97 @@
 <!-- ═══ ФОТО ═══ -->
 <div class="container">
   <div class="section-label">
-    <h2>📸 Фотографии</h2>
-    <p class="day-meta">Добавь свои фото — замени блоки на &lt;img src="..."&gt;</p>
+    <h2>📸 Локации</h2>
+    <p class="day-meta">Наведи на фото чтобы увидеть название · Все фото: Wikimedia Commons (CC)</p>
   </div>
-  <div class="photo-strip">
-    <div class="photo-slot">🕌<span>Ташкент</span></div>
-    <div class="photo-slot">🌅<span>Po-i-Kalyan</span></div>
-    <div class="photo-slot">🧵<span>Шоппинг</span></div>
-    <div class="photo-slot">🏛<span>Регистан</span></div>
-    <div class="photo-slot">🫖<span>Чайхана</span></div>
-    <div class="photo-slot">✨<span>Самарканд</span></div>
+  <div class="photo-grid">
+
+    <div class="photo-card">
+      <img src="IMG_3289.JPG" alt="Узбекистан"
+        onerror="this.parentNode.innerHTML='<div class=\'photo-fallback\' style=\'background:linear-gradient(135deg,#3d1c00,#7b3a00)\'>🚪<span>Фото</span></div>'"
+      />
+      <div class="photo-card-overlay">
+        <div><div class="photo-card-label">🚪 Старинная дверь</div><div class="photo-card-city">Узбекистан · май 2026</div></div>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img src="IMG_3290.JPG" alt="Узбекистан"
+        onerror="this.parentNode.innerHTML='<div class=\'photo-fallback\' style=\'background:linear-gradient(135deg,#1a0a3a,#3b2abf)\'>🏛<span>Фото</span></div>'"
+      />
+      <div class="photo-card-overlay">
+        <div><div class="photo-card-label">🏛 Регистан</div><div class="photo-card-city">Самарканд · май 2026</div></div>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img src="IMG_3291.JPG" alt="Узбекистан"
+        onerror="this.parentNode.innerHTML='<div class=\'photo-fallback\' style=\'background:linear-gradient(135deg,#0d2a5e,#1a6a4a)\'>🕌<span>Фото</span></div>'"
+      />
+      <div class="photo-card-overlay">
+        <div><div class="photo-card-label">🕌 Архитектура</div><div class="photo-card-city">Самарканд · май 2026</div></div>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img src="IMG_3292.JPG" alt="Узбекистан"
+        onerror="this.parentNode.innerHTML='<div class=\'photo-fallback\' style=\'background:linear-gradient(135deg,#0a3a2a,#11998e)\'>🌀<span>Фото</span></div>'"
+      />
+      <div class="photo-card-overlay">
+        <div><div class="photo-card-label">🌀 Арка</div><div class="photo-card-city">Самарканд · май 2026</div></div>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img src="IMG_3293.JPG" alt="Узбекистан"
+        onerror="this.parentNode.innerHTML='<div class=\'photo-fallback\' style=\'background:linear-gradient(135deg,#1a1208,#5a3a08)\'>☕<span>Фото</span></div>'"
+      />
+      <div class="photo-card-overlay">
+        <div><div class="photo-card-label">☕ Утренний кофе</div><div class="photo-card-city">Самарканд · май 2026</div></div>
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <img src="IMG_3294.JPG" alt="Узбекистан"
+        onerror="this.parentNode.innerHTML='<div class=\'photo-fallback\' style=\'background:linear-gradient(135deg,#0a2030,#1a5a4a)\'>🫖<span>Фото</span></div>'"
+      />
+      <div class="photo-card-overlay">
+        <div><div class="photo-card-label">🫖 Чайхана</div><div class="photo-card-city">Бухара · май 2026</div></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <!-- ═══════════════════════════════
-     ДЕНЬ 1 — ТАШКЕНТ
+     ДНИ — АККОРДЕОН
 ═══════════════════════════════ -->
-<div class="container" id="day1">
-  <div class="section-label">
-    <h2>📍 1 мая — Ташкент</h2>
-    <p class="day-meta">Прилёт · Прогулка · Поезд на Бухару</p>
+<div class="container" style="padding-bottom:3rem;">
+  <div class="section-label" style="padding-bottom:0;">
+    <h2>📅 Программа по дням</h2>
+    <p class="day-meta">Нажми на день чтобы раскрыть маршрут</p>
   </div>
-  <div class="timeline">
+
+  <div class="accordion" id="days-accordion">
+
+  <!-- ══ ДЕНЬ 1 ══ -->
+  <div class="acc-item open" id="day1">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-header-left">
+        <span class="acc-icon">✈️</span>
+        <div>
+          <div class="acc-title">1 мая — Ташкент</div>
+          <div class="acc-sub">Прилёт · Tashkent City · Поезд на Бухару</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.6rem">
+        <span class="acc-badge" style="background:rgba(240,126,38,0.15);color:var(--orange);border:1px solid rgba(240,126,38,0.25)">🌆 Ташкент</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+    </div>
+    <div class="acc-body" style="max-height:2000px">
+      <div class="acc-body-inner">
+        <div class="timeline" style="padding-top:1rem">
 
     <div class="tl-item">
       <div class="tl-dot"><div class="tl-dot-inner"></div></div>
@@ -737,20 +904,29 @@
       </div>
     </div>
 
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════
-     ДЕНЬ 2 — БУХАРА
-═══════════════════════════════ -->
-<div class="container" id="day2">
-  <div class="day-divider">
-    <hr/><span class="day-divider-badge teal">🚄 2 мая — Бухара</span><hr/>
-  </div>
-  <div class="section-label pt1">
-    <p class="day-meta">Прибытие ночью · Архитектура · Шоппинг · Вечерний Po-i-Kalyan</p>
-  </div>
-  <div class="timeline">
+  <!-- ══ ДЕНЬ 2 ══ -->
+  <div class="acc-item" id="day2">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-header-left">
+        <span class="acc-icon">🚄</span>
+        <div>
+          <div class="acc-title">2 мая — Бухара</div>
+          <div class="acc-sub">Прибытие ночью · Po-i-Kalyan · Ark · Шоппинг чапана · Ужин Ayvan</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.6rem">
+        <span class="acc-badge" style="background:rgba(42,181,160,0.15);color:var(--teal);border:1px solid rgba(42,181,160,0.25)">🕌 Бухара</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-body-inner">
+        <div class="timeline" style="padding-top:1rem">
 
     <div class="tl-item">
       <div class="tl-dot"><div class="tl-dot-inner blue"></div></div>
@@ -830,17 +1006,29 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════
-     ДЕНЬ 3 — БУХАРА → САМАРКАНД
-═══════════════════════════════ -->
-<div class="container" id="day3">
-  <div class="day-divider">
-    <hr/><span class="day-divider-badge blue">📍 3 мая — Бухара → Самарканд</span><hr/>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="section-label pt1">
-    <p class="day-meta">Мавзолеи · Чайхана · Поезд · Заселение в Самарканде</p>
-  </div>
-  <div class="timeline">
+
+  <!-- ══ ДЕНЬ 3 ══ -->
+  <div class="acc-item" id="day3">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-header-left">
+        <span class="acc-icon">🏛</span>
+        <div>
+          <div class="acc-title">3 мая — Бухара → Самарканд</div>
+          <div class="acc-sub">Ismail Samani · Chor Minor · Silk Road Tea · Поезд · Заселение</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.6rem">
+        <span class="acc-badge" style="background:rgba(45,125,210,0.15);color:var(--blue);border:1px solid rgba(45,125,210,0.25)">🚄 Переезд</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-body-inner">
+        <div class="timeline" style="padding-top:1rem">
 
     <div class="tl-item">
       <div class="tl-dot"><div class="tl-dot-inner"></div></div>
@@ -916,17 +1104,29 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════
-     ДЕНЬ 4 — САМАРКАНД
-═══════════════════════════════ -->
-<div class="container" id="day4">
-  <div class="day-divider">
-    <hr/><span class="day-divider-badge" style="background:linear-gradient(90deg,#8b4513,#d4a017)">🏛 4 мая — Самарканд</span><hr/>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="section-label pt1">
-    <p class="day-meta">Регистан · Базар · Мавзолеи · Вылет в Ташкент</p>
-  </div>
-  <div class="timeline">
+
+  <!-- ══ ДЕНЬ 4 ══ -->
+  <div class="acc-item" id="day4">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-header-left">
+        <span class="acc-icon">🌟</span>
+        <div>
+          <div class="acc-title">4 мая — Самарканд</div>
+          <div class="acc-sub">Регистан · Bibi-Khanym · Siab Bazaar · Gur-e-Amir · Вылет в Ташкент</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.6rem">
+        <span class="acc-badge" style="background:rgba(245,200,66,0.15);color:var(--gold);border:1px solid rgba(245,200,66,0.25)">✨ Самарканд</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-body-inner">
+        <div class="timeline" style="padding-top:1rem">
 
     <div class="tl-item">
       <div class="tl-dot"><div class="tl-dot-inner"></div></div>
@@ -1040,14 +1240,29 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════
-     НОЧЬ — ТАШКЕНТ (транзит)
-═══════════════════════════════ -->
-<div class="container">
-  <div class="day-divider">
-    <hr/><span class="day-divider-badge night">🌙 Ночь — Ташкент (транзит)</span><hr/>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="timeline" style="padding-top:1.5rem;">
+
+  <!-- ══ НОЧЬ ТРАНЗИТ ══ -->
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-header-left">
+        <span class="acc-icon">🌙</span>
+        <div>
+          <div class="acc-title">Ночь — Ташкент (транзит)</div>
+          <div class="acc-sub">Прилёт 23:30 · Такси · Отель · Сон</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.6rem">
+        <span class="acc-badge" style="background:rgba(100,80,180,0.15);color:#a090f0;border:1px solid rgba(100,80,180,0.25)">🏨 Транзит</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-body-inner">
+        <div class="timeline" style="padding-top:1rem">
 
     <div class="tl-item">
       <div class="tl-dot"><div class="tl-dot-inner blue"></div></div>
@@ -1071,17 +1286,24 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════
-     ДЕНЬ 5 — ТАШКЕНТ УТРО
-═══════════════════════════════ -->
-<div class="container" id="day5">
-  <div class="day-divider">
-    <hr/><span class="day-divider-badge green">☀️ 5 мая — Ташкент (утро)</span><hr/>
-  </div>
-  <div class="section-label pt1">
-    <p class="day-meta">Завтрак · Прогулка · Аэропорт → Бишкек</p>
-  </div>
-  <div class="timeline">
+  <!-- ══ ДЕНЬ 5 ══ -->
+  <div class="acc-item" id="day5">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-header-left">
+        <span class="acc-icon">☀️</span>
+        <div>
+          <div class="acc-title">5 мая — Ташкент (утро)</div>
+          <div class="acc-sub">Завтрак · Amir Timur Square · Broadway · Аэропорт → Бишкек</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.6rem">
+        <span class="acc-badge" style="background:rgba(39,174,96,0.15);color:var(--green);border:1px solid rgba(39,174,96,0.25)">🏠 Домой</span>
+        <span class="acc-arrow">▼</span>
+      </div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-body-inner">
+        <div class="timeline" style="padding-top:1rem">
 
     <div class="tl-item">
       <div class="tl-dot"><div class="tl-dot-inner"></div></div>
@@ -1145,6 +1367,14 @@
   </div>
 </div>
 
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- end accordion -->
+</div><!-- end container -->
+
 <!-- ═══════════════════════════════
      БЮДЖЕТ
 ═══════════════════════════════ -->
@@ -1192,6 +1422,35 @@
     </div>
   </div>
 </div>
+
+<script>
+  function toggleAcc(header) {
+    const item = header.parentElement;
+    const body = item.querySelector('.acc-body');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.acc-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.acc-body').style.maxHeight = '0';
+    });
+
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 200 + 'px';
+    }
+  }
+
+  // Init: open day1 on load
+  window.addEventListener('DOMContentLoaded', () => {
+    const first = document.querySelector('.acc-item.open');
+    if (first) {
+      first.querySelector('.acc-body').style.maxHeight =
+        first.querySelector('.acc-body').scrollHeight + 200 + 'px';
+    }
+  });
+</script>
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
